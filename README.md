@@ -1,4 +1,5 @@
 ![First screenshot](doc/0-initialcommit.jpg)
 ![Second screenshot](doc/1-bezier.jpg)
 ![Third screenshot](doc/2-bezierworking.jpg)
-![Fourth screenshot](3-includegallerytools.jpg)
+![Fourth screenshot](doc/3-includegallerytools.jpg)
+![Fifth screenshot](doc/4-hardcodedcurves.jpg)

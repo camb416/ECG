@@ -3,7 +3,8 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
-    
+    ofBackground(255);
+    ofSetBackgroundAuto(false);
     
     numRows = 3;
     numCols = 3;
@@ -21,6 +22,103 @@ void ofApp::setup(){
     };
     
     */
+    
+  
+    
+    allCurves.push_back(new ofxCurve(0,0,
+                                     0,0,
+                                     100,0,
+                                     100,0));
+    
+    allCurves.push_back(new ofxCurve(100,0,
+                                     100,0,
+                                     200,0,
+                                     200,0));
+    
+    allCurves.push_back(new ofxCurve(200,0,
+                                     300,0,
+                                     300,100,
+                                     200,100));
+    
+    allCurves.push_back(new ofxCurve(200,100,
+                                     200,100,
+                                     100,100,
+                                     100,100));
+    
+    allCurves.push_back(new ofxCurve(100,100,
+                                     100,100,
+                                     0,100,
+                                     0,100));
+    
+    allCurves.push_back(new ofxCurve(0,100,
+                                     -100,100,
+                                     -100,200,
+                                     0,200));
+    
+    allCurves.push_back(new ofxCurve(0,200,
+                                     0,200,
+                                     100,200,
+                                     100,200));
+    
+    allCurves.push_back(new ofxCurve(100,200,
+                                     100,200,
+                                     200,200,
+                                     200,200));
+    
+    allCurves.push_back(new ofxCurve(200,200,
+                                     400,200,
+                                     200,400,
+                                     200,200));
+
+    allCurves.push_back(new ofxCurve(200,200,
+                                     200,200,
+                                     200,100,
+                                     200,100));
+
+    allCurves.push_back(new ofxCurve(200,100,
+                                     200,100,
+                                     200,0,
+                                     200,0));
+
+    allCurves.push_back(new ofxCurve(200,0,
+                                     200,-100,
+                                     100,-100,
+                                     100,0));
+
+    allCurves.push_back(new ofxCurve(100,0,
+                                     100,0,
+                                     100,100,
+                                     100,100));
+
+    allCurves.push_back(new ofxCurve(100,100,
+                                     100,100,
+                                     100,200,
+                                     100,200));
+
+    allCurves.push_back(new ofxCurve(100,200,
+                                     100,300,
+                                     0,300,
+                                     0,200));
+    
+    allCurves.push_back(new ofxCurve(0,200,
+                                     0,200,
+                                     0,100,
+                                     0,100));
+
+     allCurves.push_back(new ofxCurve(0,100,
+                                     0,100,
+                                     0,0,
+                                     0,0));
+
+    allCurves.push_back(new ofxCurve(0,0,
+                                     0,-200,
+                                     -200,0,
+                                     0,0));
+
+
+
+    
+    
     
     
     
@@ -40,8 +138,8 @@ void ofApp::setup(){
 //    for(int i=0;i<numPts;i++){
 //        
 //        ofPoint * thisPoint = new ofPoint();
-//        thisPoint->x = cos((float)i/numPts*TWO_PI)*300;
-//        thisPoint->y = sin((float)i/numPts*TWO_PI)*300;
+//        thisPoint->x = cos((float)i/numPts*TWO_PI)*3000;
+//        thisPoint->y = sin((float)i/numPts*TWO_PI)*3000;
 //        linePts.push_back(thisPoint);
 //    }
     for(int i=0;i<ptRefs.size();i++){
@@ -184,14 +282,26 @@ void ofApp::update(){
         ofNoFill();
         c->update();
     }
+    
+    for(int i=0;i<allCurves.size();i++){
+        ofxCurve * c = allCurves.at(i);
+        ofSetColor(255);
+        ofNoFill();
+        c->update();
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofBackground(255);
+    
     
     ofPushMatrix();
-    ofTranslate(ofGetWidth()/2-300,ofGetHeight()/2-300);
+    ofTranslate(ofGetWidth()/2,ofGetHeight()/2-100, 500.0f);
+    
+    ofRotateZ(45);
+    
+    ofRotateY((float)mouseX);
+    ofRotateX((float)mouseY);
     /*
     ofFill();
     ofSetColor(255);
@@ -243,8 +353,8 @@ void ofApp::draw(){
     ofSetColor(0,255,255);
     ofNoFill();
     for(int i=1;i<linePts.size();i++){
-        ofPoint left = ofPoint(linePts.at(i-1)->x - cos(angles.at(i-1)+PI)*20, linePts.at(i-1)->y - sin(angles.at(i-1)+PI)*20);
-        ofPoint right = ofPoint(linePts.at(i)->x - cos(angles.at(i))*20, linePts.at(i)->y - sin(angles.at(i))*20);
+        ofPoint left = ofPoint(linePts.at(i-1)->x - cos(angles.at(i-1)+PI)*200, linePts.at(i-1)->y - sin(angles.at(i-1)+PI)*200);
+        ofPoint right = ofPoint(linePts.at(i)->x - cos(angles.at(i))*200, linePts.at(i)->y - sin(angles.at(i))*200);
         
      
         ofDrawEllipse(left, 10,10);
@@ -259,7 +369,7 @@ void ofApp::draw(){
                     );
     }
     */
-    
+    /*
     for(int i=0;i<curves.size();i++){
         ofxCurve * c = curves.at(i);
         ofSetColor(0);
@@ -267,7 +377,16 @@ void ofApp::draw(){
         c->draw();
         ofDrawBitmapString(ofToString(i),c->start);
     }
+    */
     
+    for(int i=0;i<allCurves.size();i++){
+        ofxCurve * c = allCurves.at(i);
+        ofSetColor(0);
+        //ofSetLineWidth(15.0f);
+      
+        ofNoFill();
+        c->draw();
+    }
     
     
     ofPopMatrix();

@@ -34,6 +34,8 @@ class ofApp : public ofBaseApp{
     
     vector<ofxCurve*> curves;
     
+    vector<ofxCurve*> allCurves;
+    
     
     
 		
