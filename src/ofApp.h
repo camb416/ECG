@@ -29,5 +29,7 @@ class ofApp : public ofBaseApp{
     vector<ofPoint*> linePts;
     vector<ofPoint*> ctrlPts;
     
+    vector<float> angles;
+    
 		
 };

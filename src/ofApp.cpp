@@ -3,6 +3,8 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
+    
+    
     numRows = 3;
     numCols = 3;
     
@@ -31,10 +33,46 @@ void ofApp::setup(){
         }
     }
     
-    for(int i=0;i<ptRefs.size();i++){
-        linePts.push_back(&basePts.at(ptRefs.at(i)));
+    int numPts = 6;
+    
+    for(int i=0;i<numPts;i++){
+        
+        ofPoint * thisPoint = new ofPoint();
+        thisPoint->x = cos((float)i/numPts*TWO_PI)*300;
+        thisPoint->y = sin((float)i/numPts*TWO_PI)*300;
+        linePts.push_back(thisPoint);
     }
+    
+    // first slope
+    ofVec2f zero = ofPoint(1,0);
+    
+    float firstAngle = zero.angleRad(*linePts.at(1) - *linePts.at(0));
+    
+    angles.push_back(firstAngle);
+    
     for(int i=1;i<linePts.size()-1;i++){
+        
+        ofPoint ptA = *linePts.at(i-1);
+        ofPoint ptB = *linePts.at(i+1);
+        
+        float thisAngle = zero.angleRad(ptB - ptA);
+        angles.push_back(thisAngle);
+    }
+    
+    float lastAngle = zero.angleRad(*linePts.at(linePts.size()-2) - *linePts.at(linePts.size()-1));
+    angles.push_back(lastAngle);
+    
+
+    
+    
+    
+    
+    // first point
+    ofPoint * firstPt = new ofPoint();
+    firstPt->set(*linePts.at(0));
+    ctrlPts.push_back(firstPt);
+                      
+    for(int i=1;i<linePts.size();i++){
         
         ofPoint * ctrlPt = new ofPoint();
         
@@ -50,6 +88,11 @@ void ofApp::setup(){
         
     }
     
+    // last point
+    ofPoint * lastPt = new ofPoint();
+    lastPt->set(*linePts.at(linePts.size()-1));
+    ctrlPts.push_back(lastPt);
+    
 }
 
 //--------------------------------------------------------------
@@ -59,10 +102,10 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    
+    ofBackground(0);
     ofPushMatrix();
     ofTranslate(ofGetWidth()/2,ofGetHeight()/2);
-    
+    /*
     ofFill();
     ofSetColor(255);
     for(int i=0;i<basePts.size();i++){
@@ -78,14 +121,54 @@ void ofApp::draw(){
     ofSetColor(255, 0, 0);
     ofNoFill();
     for(int i=0;i<ctrlPts.size();i++){
-        ofDrawLine(ctrlPts.at(i)->x-10,ctrlPts.at(i)->y-10,
-                   ctrlPts.at(i)->x+10,ctrlPts.at(i)->y+10);
-        ofDrawLine(ctrlPts.at(i)->x+10,ctrlPts.at(i)->y-10,
-                   ctrlPts.at(i)->x-10,ctrlPts.at(i)->y+10);
+        ofDrawLine(ctrlPts.at(i)->x-3,ctrlPts.at(i)->y-3,
+                   ctrlPts.at(i)->x+3,ctrlPts.at(i)->y+3);
+        ofDrawLine(ctrlPts.at(i)->x+3,ctrlPts.at(i)->y-3,
+                   ctrlPts.at(i)->x-3,ctrlPts.at(i)->y+3);
+        ofDrawBitmapString(ofToString(i),*ctrlPts.at(i));
         
     }
     
+    ofSetColor(0,255,0);
+    for(int i=1;i<linePts.size()-1;i++){
+        ofDrawCurve(ctrlPts.at(i)->x,ctrlPts.at(i)->y,
+                    linePts.at(i-1)->x,linePts.at(i-1)->y,
+                     linePts.at(i)->x,linePts.at(i)->y,
+                    ctrlPts.at(i)->x,ctrlPts.at(i)->y);
+    }
+    */
+    ofSetColor(255,0,0);
+    ofNoFill();
+    for(int i=1;i<linePts.size();i++){
+                ofDrawLine(*linePts.at(i-1),*linePts.at(i));
+    }
     
+    
+    ofSetColor(0,0,255);
+    ofNoFill();
+    for(int i=0;i<linePts.size();i++){
+        ofPoint left = ofPoint(linePts.at(i)->x - cos(angles.at(i))*10, linePts.at(i)->y - sin(angles.at(i))*10);
+        ofPoint right = ofPoint(linePts.at(i)->x - cos(angles.at(i)+PI)*10, linePts.at(i)->y - sin(angles.at(i)+PI)*10);
+        ofDrawLine(left,right);
+    }
+    
+    ofSetColor(0,255,255);
+    ofNoFill();
+    for(int i=1;i<linePts.size();i++){
+        ofPoint left = ofPoint(linePts.at(i-1)->x - cos(angles.at(i-1)+PI)*500, linePts.at(i-1)->y - sin(angles.at(i-1)+PI)*500);
+        ofPoint right = ofPoint(linePts.at(i)->x - cos(angles.at(i))*500, linePts.at(i)->y - sin(angles.at(i))*500);
+        
+     
+        ofDrawEllipse(left, 10,10);
+       ofDrawEllipse(right, 10,10);
+      
+        
+        
+        ofDrawCurve(left.x,left.y,
+                    linePts.at(i-1)->x,linePts.at(i-1)->y,
+                    linePts.at(i)->x,linePts.at(i)->y,
+                    right.x,right.y);
+    }
     
     
     ofPopMatrix();
