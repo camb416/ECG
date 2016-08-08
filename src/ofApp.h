@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxCurve.h"
 
 class ofApp : public ofBaseApp{
 
@@ -30,6 +31,10 @@ class ofApp : public ofBaseApp{
     vector<ofPoint*> ctrlPts;
     
     vector<float> angles;
+    
+    vector<ofxCurve*> curves;
+    
+    
     
 		
 };

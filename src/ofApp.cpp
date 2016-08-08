@@ -8,6 +8,8 @@ void ofApp::setup(){
     numRows = 3;
     numCols = 3;
     
+    
+    /*
     ptRefs = {6,7,8,
         5,4,3,
         0,1,2,
@@ -18,7 +20,7 @@ void ofApp::setup(){
         
     };
     
-    
+    */
     
     
     
@@ -32,7 +34,7 @@ void ofApp::setup(){
             basePts.push_back(pt);
         }
     }
-    
+    /*
     int numPts = 6;
     
 //    for(int i=0;i<numPts;i++){
@@ -96,19 +98,100 @@ void ofApp::setup(){
     ofPoint * lastPt = new ofPoint();
     lastPt->set(*linePts.at(linePts.size()-1));
     ctrlPts.push_back(lastPt);
+    */
+    
+    // starting over...
+    for(int j=0;j<numRows;j++){
+        
+        bool direction = (j%2 == 0);
+        // left true
+        // right false
+        int startNum, endNum;
+        
+       
+        if(direction){
+            for(int i=0;i<numCols-1;i++){
+                
+                ofxCurve * c = new ofxCurve();
+                ofPoint anchorA = basePts.at(j*numCols+i);
+                ofPoint anchorB = basePts.at(j*numCols+i+1);
+                
+                ofPoint ctrlA = (anchorB-anchorA)/4.0f + anchorA;
+                ofPoint ctrlB = (anchorB-anchorA)*3.0f/4.0f + anchorA;
+                
+                c->set(anchorA,ctrlA,ctrlB,anchorB);
+                
+                curves.push_back(c);
+                
+                
+            }
+        } else {
+            for(int i=numCols-1;i>0;i--){
+                
+                ofxCurve * c = new ofxCurve();
+                ofPoint anchorA = basePts.at(j*numCols+i);
+                ofPoint anchorB = basePts.at(j*numCols+i-1);
+                
+                ofPoint ctrlA = (anchorB-anchorA)/4.0f + anchorA;
+                ofPoint ctrlB = (anchorB-anchorA)*3.0f/4.0f + anchorA;
+                
+                c->set(anchorA,ctrlA,ctrlB,anchorB);
+                
+                curves.push_back(c);
+
+                
+            }
+        }
+   
+        if(j<numRows-1){
+            ofxCurve * c = new ofxCurve();
+            ofPoint anchorA;
+            ofPoint anchorB;
+            
+            ofPoint prevPt;
+            
+            if(direction){
+                anchorA = basePts.at(j*numCols+(numCols-1));
+               anchorB = basePts.at((j+1)*numCols+(numCols-1));
+                prevPt = basePts.at(j*numCols+(numCols-1)-1);
+            } else {
+                anchorA = basePts.at(j*numCols+(0));
+                anchorB = basePts.at((j+1)*numCols+(0));
+                prevPt = basePts.at(j*numCols+(0)+1);
+
+            }
+            
+            ofPoint ctrlA = (anchorA-prevPt)/1.5f + anchorA;
+            ofPoint ctrlB = (anchorA-prevPt)/1.5f + anchorB;
+
+            
+            c->set(anchorA,ctrlA,ctrlB,anchorB);
+            
+            curves.push_back(c);
+        }
+        
+        
+        
+    }
     
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    
+    for(int i=0;i<curves.size();i++){
+        ofxCurve * c = curves.at(i);
+        ofSetColor(255);
+        ofNoFill();
+        c->update();
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofBackground(0);
+    ofBackground(255);
+    
     ofPushMatrix();
-    ofTranslate(ofGetWidth()/2,ofGetHeight()/2);
+    ofTranslate(ofGetWidth()/2-300,ofGetHeight()/2-300);
     /*
     ofFill();
     ofSetColor(255);
@@ -141,6 +224,7 @@ void ofApp::draw(){
                     ctrlPts.at(i)->x,ctrlPts.at(i)->y);
     }
     */
+    /*
     ofSetColor(255,0,0);
     ofNoFill();
     for(int i=1;i<linePts.size();i++){
@@ -174,6 +258,16 @@ void ofApp::draw(){
                     linePts.at(i)->x,linePts.at(i)->y
                     );
     }
+    */
+    
+    for(int i=0;i<curves.size();i++){
+        ofxCurve * c = curves.at(i);
+        ofSetColor(0);
+        ofNoFill();
+        c->draw();
+        ofDrawBitmapString(ofToString(i),c->start);
+    }
+    
     
     
     ofPopMatrix();
