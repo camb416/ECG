@@ -36,7 +36,7 @@ class ofApp : public ofBaseApp{
     
     vector<ofxCurve*> allCurves;
     
-    
-    
+    ofPoint myPt;
+    float myPct;
 		
 };

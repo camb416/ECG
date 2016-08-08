@@ -3,3 +3,4 @@
 ![Third screenshot](doc/2-bezierworking.jpg)
 ![Fourth screenshot](doc/3-includegallerytools.jpg)
 ![Fifth screenshot](doc/4-hardcodedcurves.jpg)
+![Sixth screenshot](doc/5-boxtrail.jpg)
