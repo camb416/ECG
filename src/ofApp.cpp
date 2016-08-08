@@ -28,20 +28,24 @@ void ofApp::setup(){
         for(int i=0;i<numCols;i++){
             
             ofPoint pt;
-            pt = ofPoint(i*100.0f,j*100.0f);
+            pt = ofPoint(i*300.0f,j*300.0f);
             basePts.push_back(pt);
         }
     }
     
     int numPts = 6;
     
-    for(int i=0;i<numPts;i++){
-        
-        ofPoint * thisPoint = new ofPoint();
-        thisPoint->x = cos((float)i/numPts*TWO_PI)*300;
-        thisPoint->y = sin((float)i/numPts*TWO_PI)*300;
-        linePts.push_back(thisPoint);
+//    for(int i=0;i<numPts;i++){
+//        
+//        ofPoint * thisPoint = new ofPoint();
+//        thisPoint->x = cos((float)i/numPts*TWO_PI)*300;
+//        thisPoint->y = sin((float)i/numPts*TWO_PI)*300;
+//        linePts.push_back(thisPoint);
+//    }
+    for(int i=0;i<ptRefs.size();i++){
+        linePts.push_back(&basePts.at(ptRefs.at(i)));
     }
+    
     
     // first slope
     ofVec2f zero = ofPoint(1,0);
@@ -155,8 +159,8 @@ void ofApp::draw(){
     ofSetColor(0,255,255);
     ofNoFill();
     for(int i=1;i<linePts.size();i++){
-        ofPoint left = ofPoint(linePts.at(i-1)->x - cos(angles.at(i-1)+PI)*500, linePts.at(i-1)->y - sin(angles.at(i-1)+PI)*500);
-        ofPoint right = ofPoint(linePts.at(i)->x - cos(angles.at(i))*500, linePts.at(i)->y - sin(angles.at(i))*500);
+        ofPoint left = ofPoint(linePts.at(i-1)->x - cos(angles.at(i-1)+PI)*20, linePts.at(i-1)->y - sin(angles.at(i-1)+PI)*20);
+        ofPoint right = ofPoint(linePts.at(i)->x - cos(angles.at(i))*20, linePts.at(i)->y - sin(angles.at(i))*20);
         
      
         ofDrawEllipse(left, 10,10);
@@ -164,10 +168,11 @@ void ofApp::draw(){
       
         
         
-        ofDrawCurve(left.x,left.y,
-                    linePts.at(i-1)->x,linePts.at(i-1)->y,
-                    linePts.at(i)->x,linePts.at(i)->y,
-                    right.x,right.y);
+        ofDrawBezier(linePts.at(i-1)->x,linePts.at(i-1)->y,
+                     left.x,left.y,
+                     right.x,right.y,
+                    linePts.at(i)->x,linePts.at(i)->y
+                    );
     }
     
     
