@@ -225,16 +225,11 @@ void ofApp::update(){
         ofNoFill();
         c->update();
     }
-    myPct += 0.03125f;
-    while(myPct>=allCurves.size()){
-        myPct -= allCurves.size();
+    myPct += 0.0125f;
+    while(myPct>=1.0f){
+        myPct -= 1.0f;
     }
-    
-    int whichCurve = (int)myPct;
-    
-    
-    
-    myPt = allCurves.at(whichCurve)->plot(myPct-whichCurve);
+
 }
 
 //--------------------------------------------------------------
@@ -244,7 +239,7 @@ void ofApp::draw(){
     ofSetColor(255,255,255,255);
     ofFill();
     ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
-    
+    ofBackground(255);
     
     
     ofPushMatrix();
@@ -262,10 +257,22 @@ void ofApp::draw(){
       
         ofNoFill();
         c->draw();
+        ofEnableDepthTest();
+        myPt = allCurves.at(i)->plot(myPct);
+        ofSetColor((float)i/allCurves.size()*255,cos((float)ofGetFrameNum()/100.0f)*128+128,0);
+        ofLight();
+        ofFill();
+        ofDrawBox(myPt,sin((float)i/allCurves.size()*PI)*25.0f+5.0f);
+        ofNoFill();
+        ofSetColor(0);
+        ofDrawBox(myPt,sin((float)i/allCurves.size()*PI)*25.0f+5.0f+5.0f);
     }
-    ofNoFill();
     
-    ofDrawBox(myPt,30);
+
+    
+    
+    
+
     
     
     ofPopMatrix();
