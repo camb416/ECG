@@ -3,286 +3,176 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
-    ofBackground(255);
-    ofSetBackgroundAuto(false);
-    
-    numRows = 3;
-    numCols = 3;
+    capture = false;
     
     
-    /*
-    ptRefs = {6,7,8,
-        5,4,3,
-        0,1,2,
+    
+    // Load a CSV File.
+    if(csv.load("curves.csv")) {
+        //csv.trim(); // Trim leading/trailing whitespace from non-quoted fields.
         
-        2,5,8,
-        7,4,1,
-        0,3,6
-        
-    };
-    
-    */
-    
-  
-    
-    allCurves.push_back(new ofxCurve(0,0,
-                                     50,0,
-                                     50,0,
-                                     100,0));
-    
-    allCurves.push_back(new ofxCurve(100,0,
-                                     150,0,
-                                     150,0,
-                                     200,0));
-    
-    allCurves.push_back(new ofxCurve(200,0,
-                                     300,0,
-                                     300,100,
-                                     200,100));
-    
-    allCurves.push_back(new ofxCurve(200,100,
-                                     150,100,
-                                     150,100,
-                                     100,100));
-    
-    allCurves.push_back(new ofxCurve(100,100,
-                                     50,100,
-                                     50,100,
-                                     0,100));
-    
-    allCurves.push_back(new ofxCurve(0,100,
-                                     -100,100,
-                                     -100,200,
-                                     0,200));
-    
-    allCurves.push_back(new ofxCurve(0,200,
-                                     50,200,
-                                     50,200,
-                                     100,200));
-    
-    allCurves.push_back(new ofxCurve(100,200,
-                                     150,200,
-                                     150,200,
-                                     200,200));
-    
-    allCurves.push_back(new ofxCurve(200,200,
-                                     400,200,
-                                     200,400,
-                                     200,200));
-
-    allCurves.push_back(new ofxCurve(200,200,
-                                     200,150,
-                                     200,150,
-                                     200,100));
-
-    allCurves.push_back(new ofxCurve(200,100,
-                                     200,50,
-                                     200,50,
-                                     200,0));
-
-    allCurves.push_back(new ofxCurve(200,0,
-                                     200,-100,
-                                     100,-100,
-                                     100,0));
-
-    allCurves.push_back(new ofxCurve(100,0,
-                                     100,50,
-                                     100,50,
-                                     100,100));
-
-    allCurves.push_back(new ofxCurve(100,100,
-                                     100,150,
-                                     100,150,
-                                     100,200));
-
-    allCurves.push_back(new ofxCurve(100,200,
-                                     100,300,
-                                     0,300,
-                                     0,200));
-    
-    allCurves.push_back(new ofxCurve(0,200,
-                                     0,150,
-                                     0,150,
-                                     0,100));
-
-     allCurves.push_back(new ofxCurve(0,100,
-                                     0,50,
-                                     0,50,
-                                     0,0));
-
-    allCurves.push_back(new ofxCurve(0,0,
-                                     0,-200,
-                                     -200,0,
-                                     0,0));
-
-
-
-    
-    
-    
-    
-    
-    for(int j=0;j<numRows;j++){
-    
-        
-        for(int i=0;i<numCols;i++){
-            
-            ofPoint pt;
-            pt = ofPoint(i*300.0f,j*300.0f);
-            basePts.push_back(pt);
-        }
+        // Like with C++ vectors, the index operator is a quick way to grab row
+        // & col data, however this will cause a crash if the row or col doesn't
+        // exist, ie. the file didn't load.
+        ofLog() << "Print out a specific CSV value";
+        ofLog() << csv[0][1];
+        // also you can write...
+        ofLog() << csv[0].at(1);
+        // or you can get the row itself...
+        ofxCsvRow row = csv[0];
+        ofLog() << row.getString(1);
     }
-   
     
-    // starting over...
-    for(int j=0;j<numRows;j++){
+    // A safer method is to use the getters which will do a check on the
+    // given row & col indices but will be slightly slower.
+    ofLog() << "Print out the first value";
+    ofLog() << csv.getRow(0).getString(0);
+    
+    // Print the table to the console.
+    ofLog() << "Print the table";
+    //csv.print(); // Uses default separator ",".
+    // ... or do it manually
+    for(auto row : csv) {
+        ofLog() << ofJoinString(row, "|");
+    }
+    
+    
+    ofVec3f a,b,c,d;
+    for(int i=0;i<csv.getNumRows();i+=5){
+        ofLog() << "first: " << ofJoinString(csv.getRow(i),"<<>>");
+        ofLog() << "2nd: " << ofJoinString(csv.getRow(i+1),"<<>>");
+        ofLog() << "3rd: " << ofJoinString(csv.getRow(i+2),"<<>>");
+        ofLog() << "4th: " << ofJoinString(csv.getRow(i+3),"<<>>");
+        ofLog() << "5th: " << ofJoinString(csv.getRow(i+4),"///////////");
+        a.set(csv.getRow(i).getFloat(0),
+              csv.getRow(i).getFloat(1),
+              csv.getRow(i).getFloat(2)
+              );
         
-        bool direction = (j%2 == 0);
-        // left true
-        // right false
-        int startNum, endNum;
-        
-       
-        if(direction){
-            for(int i=0;i<numCols-1;i++){
-                
-                ofxCurve * c = new ofxCurve();
-                ofPoint anchorA = basePts.at(j*numCols+i);
-                ofPoint anchorB = basePts.at(j*numCols+i+1);
-                
-                ofPoint ctrlA = (anchorB-anchorA)/4.0f + anchorA;
-                ofPoint ctrlB = (anchorB-anchorA)*3.0f/4.0f + anchorA;
-                
-                c->set(anchorA,ctrlA,ctrlB,anchorB);
-                
-                curves.push_back(c);
-                
-                
-            }
-        } else {
-            for(int i=numCols-1;i>0;i--){
-                
-                ofxCurve * c = new ofxCurve();
-                ofPoint anchorA = basePts.at(j*numCols+i);
-                ofPoint anchorB = basePts.at(j*numCols+i-1);
-                
-                ofPoint ctrlA = (anchorB-anchorA)/4.0f + anchorA;
-                ofPoint ctrlB = (anchorB-anchorA)*3.0f/4.0f + anchorA;
-                
-                c->set(anchorA,ctrlA,ctrlB,anchorB);
-                
-                curves.push_back(c);
-
-                
-            }
-        }
-   
-        if(j<numRows-1){
-            ofxCurve * c = new ofxCurve();
-            ofPoint anchorA;
-            ofPoint anchorB;
-            
-            ofPoint prevPt;
-            
-            if(direction){
-                anchorA = basePts.at(j*numCols+(numCols-1));
-               anchorB = basePts.at((j+1)*numCols+(numCols-1));
-                prevPt = basePts.at(j*numCols+(numCols-1)-1);
-            } else {
-                anchorA = basePts.at(j*numCols+(0));
-                anchorB = basePts.at((j+1)*numCols+(0));
-                prevPt = basePts.at(j*numCols+(0)+1);
-
-            }
-            
-            ofPoint ctrlA = (anchorA-prevPt)/1.5f + anchorA;
-            ofPoint ctrlB = (anchorA-prevPt)/1.5f + anchorB;
-
-            
-            c->set(anchorA,ctrlA,ctrlB,anchorB);
-            
-            curves.push_back(c);
-        }
-        
-        
+        b.set(csv.getRow(i+1).getFloat(0),
+              csv.getRow(i+1).getFloat(1),
+              csv.getRow(i+1).getFloat(2)
+              );
+        c.set(csv.getRow(i+2).getFloat(0),
+              csv.getRow(i+2).getFloat(1),
+              csv.getRow(i+2).getFloat(2)
+              );
+        d.set(csv.getRow(i+3).getFloat(0),
+              csv.getRow(i+3).getFloat(1),
+              csv.getRow(i+3).getFloat(2)
+              );
+        curves.push_back(new ofxCurve(a,b,c,d));
         
     }
+    
+    
+    
+    
+    a.set(0,0,0);
+    b.set(200,0,0);
+    c.set(0,200,200);
+    d.set(0,200,0);
+    
+    curve = new ofxCurve(a,b,c,d);
+    
     
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    curve->update();
+    
+    t += 0.001f;
+    
+    while(t>1.0f) t -=1.0f;
+    
     for(int i=0;i<curves.size();i++){
         ofxCurve * c = curves.at(i);
         ofSetColor(255);
         ofNoFill();
         c->update();
     }
-    
-    for(int i=0;i<allCurves.size();i++){
-        ofxCurve * c = allCurves.at(i);
-        ofSetColor(255);
-        ofNoFill();
-        c->update();
-    }
-    myPct += 0.0125f;
-    while(myPct>=1.0f){
-        myPct -= 1.0f;
-    }
-
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     
+    //we don't want to capture every frame
+    //so we only capture one frame when capture
+    //is set to true
+    //    if(capture){
+    //        output.beginEPS("test.ps");
+    //    }
+    //
+    //    output.noFill();
     
-    ofSetColor(255,255,255,255);
-    ofFill();
-    ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
     ofBackground(255);
     
-    
     ofPushMatrix();
-    ofTranslate(ofGetWidth()/2,ofGetHeight()/2-100, 500.0f);
+    ofTranslate(ofGetWidth()/2,ofGetHeight()/2,900);
     
-    ofRotateZ(45);
     
     ofRotateY((float)mouseX);
     ofRotateX((float)mouseY);
     
+    ofTranslate(-150,-150,0);
     
-    for(int i=0;i<allCurves.size();i++){
-        ofxCurve * c = allCurves.at(i);
+    ofPoint pt = curve->plot3d(t);
+    
+    // ofDrawEllipse(pt.x,pt.y,pt.z,10,10);
+    
+    
+    
+    ofNoFill();
+    ofSetColor(0);
+    //curve->draw();
+    
+    
+    ofMesh mesh;
+    mesh.setupIndicesAuto();
+    
+    for(int i=0;i<curves.size();i++){
+        ofxCurve * c = curves.at(i);
         ofSetColor(0);
-      
+        
         ofNoFill();
-        c->draw();
-        ofEnableDepthTest();
-        myPt = allCurves.at(i)->plot(myPct);
-        ofSetColor((float)i/allCurves.size()*255,cos((float)ofGetFrameNum()/100.0f)*128+128,0);
-        ofLight();
-        ofFill();
-        ofDrawBox(myPt,sin((float)i/allCurves.size()*PI)*25.0f+5.0f);
-        ofNoFill();
-        ofSetColor(0);
-        ofDrawBox(myPt,sin((float)i/allCurves.size()*PI)*25.0f+5.0f+5.0f);
+        // c->draw();
+        
+        int numSections = 128;
+        
+        for(int j=0;j<numSections;j++){
+            float t2 = t + (float)j/(float)numSections;
+            while(t2>1.0f) t2-= 1.0f;
+            ofVec3f p =c->plot3d(t2);
+            ofVec3f n = c->getNormal(t2) * 20.0f;
+            
+            ofVec3f leftVec = n.getRotated(90, ofVec3f(cos((t+t2)*TWO_PI), sin((t+t2)*TWO_PI), 0)); // v2 is (Ã2, Ã2, 0)
+            
+            //  ofDrawEllipse(p,5,5);
+            
+            ofDrawLine(p,p+leftVec);
+            //ofDrawLine(p,p-leftVec);
+            mesh.addVertex(p);
+            mesh.addVertex(p+leftVec);
+            
+        }
+        mesh.drawFaces();
+        
+        
+        
+        
     }
-    
-
-    
-    
-    
-
-    
     
     ofPopMatrix();
     
-    
+
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    
+  
+    //    curves.clear();
+    //    setup();
 }
 
 //--------------------------------------------------------------
