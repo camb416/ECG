@@ -133,6 +133,7 @@ void ofApp::draw(){
     
     
     ofMesh mesh;
+    mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
     //mesh.setupIndicesAuto();
     
     for(int i=0;i<curves.size();i++){
@@ -142,7 +143,7 @@ void ofApp::draw(){
         ofNoFill();
         // c->draw();
         
-        int numSections = 128;
+        int numSections = 256;
         
         for(int j=0;j<numSections;j++){
             float t2 = (float)j/(float)numSections;
@@ -160,7 +161,7 @@ void ofApp::draw(){
             mesh.addVertex(p);
             mesh.addColor(ofFloatColor(1.0,1.0,1.0));
             mesh.addVertex(p+leftVec);
-            mesh.addColor(ofFloatColor(0.0,0.0,0.0));
+            mesh.addColor(ofFloatColor(1.0,1.0,1.0));
             
             
             
@@ -183,7 +184,7 @@ void ofApp::draw(){
         
     }
     
-    
+  
     for(int i=0;i<mesh.getNumVertices()-2;i+=2){
         mesh.addIndex(i);
         mesh.addIndex(i+1);
