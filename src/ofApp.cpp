@@ -109,7 +109,7 @@ void ofApp::draw(){
     ofBackground(255);
     
     ofPushMatrix();
-    ofTranslate(ofGetWidth()/2,ofGetHeight()/2,900);
+    ofTranslate(ofGetWidth()/2,ofGetHeight()/2,700);
     
     
     ofRotateY((float)mouseX);
@@ -125,7 +125,7 @@ void ofApp::draw(){
     
     ofNoFill();
     ofSetColor(0);
-    //curve->draw();
+    // curve->draw();
     
     
     ofMesh mesh;
@@ -136,12 +136,12 @@ void ofApp::draw(){
         ofSetColor(0);
         
         ofNoFill();
-        // c->draw();
+        c->draw();
         
         int numSections = 128;
         
         for(int j=0;j<numSections;j++){
-            float t2 = t + (float)j/(float)numSections;
+            float t2 = (float)j/(float)numSections;
             while(t2>1.0f) t2-= 1.0f;
             ofVec3f p =c->plot3d(t2);
             ofVec3f n = c->getNormal(t2) * 20.0f;
@@ -150,14 +150,22 @@ void ofApp::draw(){
             
             //  ofDrawEllipse(p,5,5);
             
-            ofDrawLine(p,p+leftVec);
+           // ofDrawLine(p,p+leftVec);
             //ofDrawLine(p,p-leftVec);
             mesh.addVertex(p);
+            mesh.addColor(ofFloatColor(0,1.0,0));
             mesh.addVertex(p+leftVec);
+            mesh.addColor(ofFloatColor(1.0,0,0));
+            
+            ofSetColor(0);
+            ofDrawEllipse(p,5,5);
+            ofSetColor(128);
+            ofDrawEllipse(leftVec+p,5,5);
             
         }
-        mesh.drawFaces();
-        
+        ofSetColor(255);
+     mesh.drawFaces();
+     
         
         
         
