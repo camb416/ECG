@@ -1,11 +1,13 @@
 #include "ofApp.h"
 
+int drawFaces;
+
 //--------------------------------------------------------------
 void ofApp::setup(){
     
     capture = false;
     
-    
+    drawFaces = 0;
     
     // Load a CSV File.
     if(csv.load("curves.csv")) {
@@ -82,7 +84,7 @@ void ofApp::setup(){
 void ofApp::update(){
     curve->update();
     
-    t += 0.001f;
+    t += 0.002f;
     
     while(t>1.0f) t -=1.0f;
     
@@ -92,6 +94,8 @@ void ofApp::update(){
         ofNoFill();
         c->update();
     }
+    
+    ofEnableDepthTest();
 }
 
 //--------------------------------------------------------------
@@ -109,7 +113,7 @@ void ofApp::draw(){
     ofBackground(255);
     
     ofPushMatrix();
-    ofTranslate(ofGetWidth()/2,ofGetHeight()/2,700);
+    ofTranslate(ofGetWidth()/2,ofGetHeight()/2,900);
     
     
     ofRotateY((float)mouseX);
@@ -129,42 +133,65 @@ void ofApp::draw(){
     
     
     ofMesh mesh;
-    mesh.setupIndicesAuto();
+    //mesh.setupIndicesAuto();
     
     for(int i=0;i<curves.size();i++){
         ofxCurve * c = curves.at(i);
         ofSetColor(0);
         
         ofNoFill();
-        c->draw();
+        // c->draw();
         
-        int numSections = 128;
+        int numSections = 32;
         
         for(int j=0;j<numSections;j++){
             float t2 = (float)j/(float)numSections;
             while(t2>1.0f) t2-= 1.0f;
             ofVec3f p =c->plot3d(t2);
-            ofVec3f n = c->getNormal(t2) * 20.0f;
+            ofVec3f n = c->getNormal(t2) * 25.0f;
             
             ofVec3f leftVec = n.getRotated(90, ofVec3f(cos((t+t2)*TWO_PI), sin((t+t2)*TWO_PI), 0)); // v2 is (Ã2, Ã2, 0)
             
-            //  ofDrawEllipse(p,5,5);
             
-           // ofDrawLine(p,p+leftVec);
-            //ofDrawLine(p,p-leftVec);
+            // ofDrawEllipse(p,5,5);
+            // ofDrawLine(p,p+leftVec);
+            // ofDrawLine(p,p-leftVec);
+            
             mesh.addVertex(p);
-            mesh.addColor(ofFloatColor(0,1.0,0));
+            mesh.addColor(ofFloatColor(1.0,1.0,(i%numSections)/(float)numSections));
             mesh.addVertex(p+leftVec);
-            mesh.addColor(ofFloatColor(1.0,0,0));
+            mesh.addColor(ofFloatColor(1.0,(i%numSections)/(float)numSections,1.0));
             
-            ofSetColor(0);
-            ofDrawEllipse(p,5,5);
-            ofSetColor(128);
-            ofDrawEllipse(leftVec+p,5,5);
+         
+            
+            
+            // ofSetColor(0);
+            // ofDrawEllipse(p,5,5);
+            // ofSetColor(128);
+            // ofDrawEllipse(leftVec+p,5,5);
             
         }
+        
+        for(int i=0;i<mesh.getNumVertices()-2;i+=2){
+            mesh.addIndex(i);
+            mesh.addIndex(i+1);
+            mesh.addIndex(i+2);
+            
+            mesh.addIndex(i+2);
+            mesh.addIndex(i+3);
+            mesh.addIndex(i+1);
+        }
+        
         ofSetColor(255);
-     mesh.drawFaces();
+
+        if(drawFaces == 0){
+           mesh.drawFaces();
+        } else if(drawFaces == 1) {
+            mesh.drawVertices();
+        } else if(drawFaces == 2){
+            mesh.drawWireframe();
+        }
+        
      
         
         
@@ -181,6 +208,12 @@ void ofApp::keyPressed(int key){
   
     //    curves.clear();
     //    setup();
+    if(key == 'd'){
+        drawFaces++;
+        if(drawFaces>2){
+            drawFaces = 0;
+        }
+    }
 }
 
 //--------------------------------------------------------------

@@ -9,4 +9,7 @@
 ![Ninth Screenshot](doc/7-3dworking.jpg)
 ![Tenth Screenshot](doc/8-3dworking2.jpg)
 ![Eleventh Screenshot](doc/9-meshprogress.jpg)
-![Twelfth Screenshot](A-redgreen.jpg)
+![Twelfth Screenshot](doc/A-redgreen.jpg)
+![Pink Screenshot](doc/B-pinkSolid.jpg)
+![Pink Screenshot](doc/C-pinkDots.jpg)
+![Pink Screenshot](doc/D-pinkwireframe.jpg)
