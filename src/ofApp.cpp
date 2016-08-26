@@ -110,7 +110,7 @@ void ofApp::draw(){
     //
     //    output.noFill();
     
-    ofBackground(255);
+    ofBackground(0);
     
     ofPushMatrix();
     ofTranslate(ofGetWidth()/2,ofGetHeight()/2,900);
@@ -142,7 +142,7 @@ void ofApp::draw(){
         ofNoFill();
         // c->draw();
         
-        int numSections = 32;
+        int numSections = 128;
         
         for(int j=0;j<numSections;j++){
             float t2 = (float)j/(float)numSections;
@@ -158,11 +158,11 @@ void ofApp::draw(){
             // ofDrawLine(p,p-leftVec);
             
             mesh.addVertex(p);
-            mesh.addColor(ofFloatColor(1.0,1.0,(i%numSections)/(float)numSections));
+            mesh.addColor(ofFloatColor(1.0,1.0,1.0));
             mesh.addVertex(p+leftVec);
-            mesh.addColor(ofFloatColor(1.0,(i%numSections)/(float)numSections,1.0));
+            mesh.addColor(ofFloatColor(0.0,0.0,0.0));
             
-         
+            
             
             
             // ofSetColor(0);
@@ -172,40 +172,55 @@ void ofApp::draw(){
             
         }
         
-        for(int i=0;i<mesh.getNumVertices()-2;i+=2){
-            mesh.addIndex(i);
-            mesh.addIndex(i+1);
-            mesh.addIndex(i+2);
-            
-            mesh.addIndex(i+2);
-            mesh.addIndex(i+3);
-            mesh.addIndex(i+1);
-        }
         
-        ofSetColor(255);
-
-        if(drawFaces == 0){
-           mesh.drawFaces();
-        } else if(drawFaces == 1) {
-            mesh.drawVertices();
-        } else if(drawFaces == 2){
-            mesh.drawWireframe();
-        }
         
-     
+        
+   
+        
+        
         
         
         
     }
     
+    
+    for(int i=0;i<mesh.getNumVertices()-2;i+=2){
+        mesh.addIndex(i);
+        mesh.addIndex(i+1);
+        mesh.addIndex(i+2);
+        
+        mesh.addIndex(i+2);
+        mesh.addIndex(i+3);
+        mesh.addIndex(i+1);
+    }
+    
+            mesh.addIndex(mesh.getNumVertices()-2);
+            mesh.addIndex(mesh.getNumVertices()-1);
+            mesh.addIndex(0);
+    
+    mesh.addIndex(0);
+    mesh.addIndex(1);
+    mesh.addIndex(mesh.getNumVertices()-1);
+
+    
+    
+    ofSetColor(255);
+    
+    if(drawFaces == 0){
+        mesh.drawFaces();
+    } else if(drawFaces == 1) {
+        mesh.drawVertices();
+    } else if(drawFaces == 2){
+        mesh.drawWireframe();
+    }
     ofPopMatrix();
     
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-  
+    
     //    curves.clear();
     //    setup();
     if(key == 'd'){
@@ -262,6 +277,6 @@ void ofApp::gotMessage(ofMessage msg){
 }
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
+void ofApp::dragEvent(ofDragInfo dragInfo){
     
 }
