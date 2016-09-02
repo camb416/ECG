@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxCurve.h"
 #include "ofxCsv.h"
+#include "ofxGui.h"
 
 class ofApp : public ofBaseApp{
     
@@ -32,6 +33,19 @@ public:
     
     // ofxVectorGraphics output;
     bool capture;
+    
+    // GUI stuff
+    
+    ofxFloatSlider radius;
+    ofxColorSlider colorA;
+    
+     ofxColorSlider colorB;
+     ofxColorSlider colorC;
+     ofxColorSlider colorD;
+    
+    ofxPanel gui;
+    bool bHide;
+
     
     
     
