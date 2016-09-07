@@ -139,7 +139,7 @@ void ofApp::draw(){
     
     
     ofPushMatrix();
-    ofTranslate(ofGetWidth()/2,ofGetHeight()/2,900);
+    ofTranslate(ofGetWidth()/2,ofGetHeight()/2,500);
     
     
     ofRotateY((float)mouseX);
@@ -182,8 +182,8 @@ void ofApp::draw(){
             ofVec3f p =c->plot3d(t2);
             ofVec3f n = c->getNormal(t2) * 25.0f;
             
-            ofVec3f rightVec = ofVec3f(20,0,0).getRotated(t+5,n);
-            ofVec3f leftVec = ofVec3f(20,0,0).getRotated(t,n);
+            ofVec3f rightVec = ofVec3f(20,0,0).getRotated(t2+t+90,n);
+            ofVec3f leftVec = ofVec3f(20,0,0).getRotated(t2+t,n);
 
             mesh.addVertex(p+rightVec);
             mesh.addColor(ofColor(colorA));
@@ -198,8 +198,8 @@ void ofApp::draw(){
             ofVec3f p =c->plot3d(t2);
             ofVec3f n = c->getNormal(t2) * 25.0f;
             
-            ofVec3f rightVec = ofVec3f(10,0,0).getRotated(t+5+240,n);
-            ofVec3f leftVec = ofVec3f(10,0,0).getRotated(t+240,n);
+            ofVec3f rightVec = ofVec3f(10,0,0).getRotated(t2+t+90+240,n);
+            ofVec3f leftVec = ofVec3f(10,0,0).getRotated(t2+t+240,n);
             
             mesh2.addVertex(p+rightVec);
             mesh2.addColor(ofColor(colorA));
@@ -215,8 +215,8 @@ void ofApp::draw(){
             ofVec3f p =c->plot3d(t2);
             ofVec3f n = c->getNormal(t2) * 25.0f;
             
-            ofVec3f rightVec = ofVec3f(30,0,0).getRotated(t+5+120,n);
-            ofVec3f leftVec = ofVec3f(30,0,0).getRotated(t+120,n);
+            ofVec3f rightVec = ofVec3f(30,0,0).getRotated(t2+t+90+120,n);
+            ofVec3f leftVec = ofVec3f(30,0,0).getRotated(t2+t+120,n);
             
             
             mesh3.addVertex(p+rightVec);
