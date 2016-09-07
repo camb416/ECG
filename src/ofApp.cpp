@@ -9,9 +9,9 @@ void ofApp::setup(){
 
     // gui stuff
     gui.setup("my panel"); // most of the time you don't need a name
-gui.add(radius.setup("radius", 10, 1, 100));
+gui.add(radius.setup("radius", 10, 1, 200));
     gui.add(zPos.setup("z pos",600,0,1000));
-    gui.add(twists.setup("twists",8,0,16));
+    gui.add(twists.setup("twists",8,0,32));
     
     gui.add(colorA.setup("colorA", ofColor(100, 100, 140), ofColor(0, 0), ofColor(255, 255)));
     gui.add(colorB.setup("colorB", ofColor(100, 100, 140), ofColor(0, 0), ofColor(255, 255)));
