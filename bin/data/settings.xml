@@ -5,4 +5,6 @@
 	<colorC>100, 100, 219, 255</colorC>
 	<colorD>32, 100, 101, 255</colorD>
 <my_panel/>
+<rot__speed>1.5</rot__speed>
+<redraw_background>1</redraw_background>
 </my_panel>
