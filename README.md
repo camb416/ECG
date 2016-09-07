@@ -18,3 +18,5 @@
 ![GRL Screenshot](doc/G-grl.jpg)
 ![gui Screenshot](doc/H-gui.jpg)
 ![gui Screenshot 2](doc/I-gui2.jpg)
+![background wipe Screenshot](doc/J-backgroundwipe1.jpg)
+![background wipe Screenshot 2](doc/K-backgroundwipe2.jpg)

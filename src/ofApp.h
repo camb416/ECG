@@ -47,6 +47,9 @@ public:
     
     ofxPanel gui;
     bool bHide;
+    
+//    bool bBackground;
+    ofxToggle bBackground;
 
     
     

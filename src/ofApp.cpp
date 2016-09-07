@@ -15,7 +15,9 @@ gui.add(radius.setup("radius", 140, 10, 300));
     gui.add(colorC.setup("colorC", ofColor(100, 100, 140), ofColor(0, 0), ofColor(255, 255)));
     gui.add(colorD.setup("colorD", ofColor(100, 100, 140), ofColor(0, 0), ofColor(255, 255)));
     
-    gui.add(rotSpeed.setup("rot. speed",0.0f,-0.005f,0.005f));
+    gui.add(rotSpeed.setup("rot. speed",0.0f,-5.0f,5.0f));
+    
+    gui.add(bBackground.setup("redraw background", true));
 
     gui.loadFromFile("settings.xml");
     
@@ -94,6 +96,9 @@ gui.add(radius.setup("radius", 140, 10, 300));
     
     curve = new ofxCurve(a,b,c,d);
     
+   
+    ofBackground(0);
+    
     
 }
 
@@ -103,7 +108,7 @@ void ofApp::update(){
     
     t += rotSpeed;
     
-    while(t>1.0f) t -=1.0f;
+    while(t>360.0f) t -=360.0f;
     
     for(int i=0;i<curves.size();i++){
         ofxCurve * c = curves.at(i);
@@ -113,6 +118,9 @@ void ofApp::update(){
     }
     
     ofEnableDepthTest();
+    
+     ofSetBackgroundAuto(bBackground);
+ 
 }
 
 //--------------------------------------------------------------
@@ -127,7 +135,7 @@ void ofApp::draw(){
     //
     //    output.noFill();
     
-    ofBackground(0);
+    //ofBackground(0);
     
     
     ofPushMatrix();
@@ -169,60 +177,34 @@ void ofApp::draw(){
         
         for(int j=0;j<numSections;j++){
             float t2 = (float)j/(float)numSections;
+            float t3 = t2* 360.0f;
             while(t2>1.0f) t2-= 1.0f;
             ofVec3f p =c->plot3d(t2);
             ofVec3f n = c->getNormal(t2) * 25.0f;
             
-            ofVec3f leftVec = n.getRotated(90, ofVec3f(cos((t+t2)*TWO_PI), sin((t+t2)*TWO_PI), 0)); // v2 is (Ã2, Ã2, 0)
-            ofVec3f rightVec = n.getRotated(90, ofVec3f(cos((t+t2+PI)*TWO_PI), sin((t+t2+PI)*TWO_PI), 0)); // v2 is (Ã2, Ã2, 0)
-            
-    
-            
-            
-            // ofDrawEllipse(p,5,5);
-            // ofDrawLine(p,p+leftVec);
-            // ofDrawLine(p,p-leftVec);
-        
+            ofVec3f rightVec = ofVec3f(20,0,0).getRotated(t+5,n);
+            ofVec3f leftVec = ofVec3f(20,0,0).getRotated(t,n);
+
             mesh.addVertex(p+rightVec);
             mesh.addColor(ofColor(colorA));
             mesh.addVertex(p+leftVec);
             mesh.addColor(ofColor(colorB));
-            
-            
-            
-            
-            // ofSetColor(0);
-            // ofDrawEllipse(p,5,5);
-            // ofSetColor(128);
-            // ofDrawEllipse(leftVec+p,5,5);
-            
+
         }
         
         for(int j=0;j<numSections;j++){
             float t2 = (float)j/(float)numSections;
-            while(t2>1.0f) t2-= 1.0f;
+            //while(t2>1.0f) t2-= 1.0f;
             ofVec3f p =c->plot3d(t2);
             ofVec3f n = c->getNormal(t2) * 25.0f;
             
-            ofVec3f leftVec = n.getRotated(120, ofVec3f(cos((t*1.1+t2+1)*TWO_PI), sin((t*1.1+t2+1)*TWO_PI), 0)); // v2 is (Ã2, Ã2, 0)
-           
+            ofVec3f rightVec = ofVec3f(10,0,0).getRotated(t+5+240,n);
+            ofVec3f leftVec = ofVec3f(10,0,0).getRotated(t+240,n);
             
-            // ofDrawEllipse(p,5,5);
-            // ofDrawLine(p,p+leftVec);
-            // ofDrawLine(p,p-leftVec);
-            
-            mesh2.addVertex(p);
+            mesh2.addVertex(p+rightVec);
             mesh2.addColor(ofColor(colorA));
             mesh2.addVertex(p+leftVec);
             mesh2.addColor(ofColor(colorC));
-            
-            
-            
-            
-            // ofSetColor(0);
-            // ofDrawEllipse(p,5,5);
-            // ofSetColor(128);
-            // ofDrawEllipse(leftVec+p,5,5);
             
         }
     
@@ -233,34 +215,17 @@ void ofApp::draw(){
             ofVec3f p =c->plot3d(t2);
             ofVec3f n = c->getNormal(t2) * 25.0f;
             
-            ofVec3f leftVec = n.getRotated(90, ofVec3f(cos((t*1.2+t2+2)*TWO_PI), sin((t*1.2+t2+2)*TWO_PI), 0)); // v2 is (Ã2, Ã2, 0)
+            ofVec3f rightVec = ofVec3f(30,0,0).getRotated(t+5+120,n);
+            ofVec3f leftVec = ofVec3f(30,0,0).getRotated(t+120,n);
             
             
-            // ofDrawEllipse(p,5,5);
-            // ofDrawLine(p,p+leftVec);
-            // ofDrawLine(p,p-leftVec);
-            
-            mesh3.addVertex(p);
+            mesh3.addVertex(p+rightVec);
             mesh3.addColor(ofColor(colorA));
             mesh3.addVertex(p+leftVec);
             mesh3.addColor(ofColor(colorD));
             
-            
-            
-            
-            // ofSetColor(0);
-            // ofDrawEllipse(p,5,5);
-            // ofSetColor(128);
-            // ofDrawEllipse(leftVec+p,5,5);
-            
         }
-        
-        
-   
-        
-        
-        
-        
+      
         
     }
     
@@ -325,16 +290,16 @@ void ofApp::draw(){
     
     if(drawFaces == 0){
         mesh.drawFaces();
-//        mesh2.drawFaces();
-//        mesh3.drawFaces();
+        mesh2.drawFaces();
+        mesh3.drawFaces();
     } else if(drawFaces == 1) {
         mesh.drawVertices();
-//        mesh2.drawVertices();
-//        mesh3.drawVertices();
+        mesh2.drawVertices();
+        mesh3.drawVertices();
     } else if(drawFaces == 2){
         mesh.drawWireframe();
-//        mesh2.drawWireframe();
-//         mesh3.drawWireframe();
+        mesh2.drawWireframe();
+         mesh3.drawWireframe();
     }
     ofPopMatrix();
     
@@ -356,6 +321,8 @@ void ofApp::keyPressed(int key){
         if(drawFaces>2){
             drawFaces = 0;
         }
+    } else if(key == ' '){
+        bBackground = !bBackground;
     }
 }
 
