@@ -43,6 +43,8 @@ public:
      ofxColorSlider colorC;
      ofxColorSlider colorD;
     
+    ofxFloatSlider rotSpeed;
+    
     ofxPanel gui;
     bool bHide;
 

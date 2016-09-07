@@ -14,7 +14,11 @@ gui.add(radius.setup("radius", 140, 10, 300));
     gui.add(colorB.setup("colorB", ofColor(100, 100, 140), ofColor(0, 0), ofColor(255, 255)));
     gui.add(colorC.setup("colorC", ofColor(100, 100, 140), ofColor(0, 0), ofColor(255, 255)));
     gui.add(colorD.setup("colorD", ofColor(100, 100, 140), ofColor(0, 0), ofColor(255, 255)));
+    
+    gui.add(rotSpeed.setup("rot. speed",0.0f,-0.005f,0.005f));
 
+    gui.loadFromFile("settings.xml");
+    
     bHide = false;
 
     
@@ -97,7 +101,7 @@ gui.add(radius.setup("radius", 140, 10, 300));
 void ofApp::update(){
     curve->update();
     
-    t += 0.002f;
+    t += rotSpeed;
     
     while(t>1.0f) t -=1.0f;
     
@@ -169,7 +173,8 @@ void ofApp::draw(){
             ofVec3f p =c->plot3d(t2);
             ofVec3f n = c->getNormal(t2) * 25.0f;
             
-            ofVec3f leftVec = n.getRotated(60, ofVec3f(cos((t+t2)*TWO_PI), sin((t+t2)*TWO_PI), 0)); // v2 is (Ã2, Ã2, 0)
+            ofVec3f leftVec = n.getRotated(90, ofVec3f(cos((t+t2)*TWO_PI), sin((t+t2)*TWO_PI), 0)); // v2 is (Ã2, Ã2, 0)
+            ofVec3f rightVec = n.getRotated(90, ofVec3f(cos((t+t2+PI)*TWO_PI), sin((t+t2+PI)*TWO_PI), 0)); // v2 is (Ã2, Ã2, 0)
             
     
             
@@ -178,7 +183,7 @@ void ofApp::draw(){
             // ofDrawLine(p,p+leftVec);
             // ofDrawLine(p,p-leftVec);
         
-            mesh.addVertex(p);
+            mesh.addVertex(p+rightVec);
             mesh.addColor(ofColor(colorA));
             mesh.addVertex(p+leftVec);
             mesh.addColor(ofColor(colorB));
@@ -320,16 +325,16 @@ void ofApp::draw(){
     
     if(drawFaces == 0){
         mesh.drawFaces();
-        mesh2.drawFaces();
-        mesh3.drawFaces();
+//        mesh2.drawFaces();
+//        mesh3.drawFaces();
     } else if(drawFaces == 1) {
         mesh.drawVertices();
-        mesh2.drawVertices();
-        mesh3.drawVertices();
+//        mesh2.drawVertices();
+//        mesh3.drawVertices();
     } else if(drawFaces == 2){
         mesh.drawWireframe();
-        mesh2.drawWireframe();
-         mesh3.drawWireframe();
+//        mesh2.drawWireframe();
+//         mesh3.drawWireframe();
     }
     ofPopMatrix();
     

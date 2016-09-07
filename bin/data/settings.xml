@@ -1,7 +1,7 @@
 <my_panel>
-	<radius>140</radius>
-	<colorA>255, 255, 184, 255</colorA>
-	<colorB>91, 3, 42, 255</colorB>
+	<radius>121.65</radius>
+	<colorA>255, 0, 71, 255</colorA>
+	<colorB>255, 255, 255, 255</colorB>
 	<colorC>100, 100, 219, 255</colorC>
 	<colorD>32, 100, 101, 255</colorD>
 <my_panel/>
