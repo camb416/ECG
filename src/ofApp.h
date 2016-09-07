@@ -37,6 +37,9 @@ public:
     // GUI stuff
     
     ofxFloatSlider radius;
+    ofxFloatSlider zPos;
+    ofxIntSlider twists;
+    
     ofxColorSlider colorA;
     
      ofxColorSlider colorB;

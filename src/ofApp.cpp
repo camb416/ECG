@@ -9,7 +9,10 @@ void ofApp::setup(){
 
     // gui stuff
     gui.setup("my panel"); // most of the time you don't need a name
-gui.add(radius.setup("radius", 140, 10, 300));
+gui.add(radius.setup("radius", 10, 1, 100));
+    gui.add(zPos.setup("z pos",600,0,1000));
+    gui.add(twists.setup("twists",8,0,16));
+    
     gui.add(colorA.setup("colorA", ofColor(100, 100, 140), ofColor(0, 0), ofColor(255, 255)));
     gui.add(colorB.setup("colorB", ofColor(100, 100, 140), ofColor(0, 0), ofColor(255, 255)));
     gui.add(colorC.setup("colorC", ofColor(100, 100, 140), ofColor(0, 0), ofColor(255, 255)));
@@ -139,7 +142,7 @@ void ofApp::draw(){
     
     
     ofPushMatrix();
-    ofTranslate(ofGetWidth()/2,ofGetHeight()/2,500);
+    ofTranslate(ofGetWidth()/2,ofGetHeight()/2,zPos);
     
     
     ofRotateY((float)mouseX);
@@ -177,13 +180,13 @@ void ofApp::draw(){
         
         for(int j=0;j<numSections;j++){
             float t2 = (float)j/(float)numSections;
-            float t3 = t2* 360.0f;
+            float t3 = t2* 360.0f*(float)twists;
             while(t2>1.0f) t2-= 1.0f;
             ofVec3f p =c->plot3d(t2);
             ofVec3f n = c->getNormal(t2) * 25.0f;
             
-            ofVec3f rightVec = ofVec3f(20,0,0).getRotated(t2+t+90,n);
-            ofVec3f leftVec = ofVec3f(20,0,0).getRotated(t2+t,n);
+            ofVec3f rightVec = ofVec3f(radius*2,0,0).getRotated(t3+t+90,n);
+            ofVec3f leftVec = ofVec3f(radius*2,0,0).getRotated(t3+t,n);
 
             mesh.addVertex(p+rightVec);
             mesh.addColor(ofColor(colorA));
@@ -195,11 +198,12 @@ void ofApp::draw(){
         for(int j=0;j<numSections;j++){
             float t2 = (float)j/(float)numSections;
             //while(t2>1.0f) t2-= 1.0f;
+             float t3 = t2* 360.0f*(float)twists;
             ofVec3f p =c->plot3d(t2);
             ofVec3f n = c->getNormal(t2) * 25.0f;
             
-            ofVec3f rightVec = ofVec3f(10,0,0).getRotated(t2+t+90+240,n);
-            ofVec3f leftVec = ofVec3f(10,0,0).getRotated(t2+t+240,n);
+            ofVec3f rightVec = ofVec3f(radius,0,0).getRotated(t3+t+90+240,n);
+            ofVec3f leftVec = ofVec3f(radius,0,0).getRotated(t3+t+240,n);
             
             mesh2.addVertex(p+rightVec);
             mesh2.addColor(ofColor(colorA));
@@ -212,11 +216,12 @@ void ofApp::draw(){
         for(int j=0;j<numSections;j++){
             float t2 = (float)j/(float)numSections;
             while(t2>1.0f) t2-= 1.0f;
+             float t3 = t2* 360.0f*(float)twists;
             ofVec3f p =c->plot3d(t2);
             ofVec3f n = c->getNormal(t2) * 25.0f;
             
-            ofVec3f rightVec = ofVec3f(30,0,0).getRotated(t2+t+90+120,n);
-            ofVec3f leftVec = ofVec3f(30,0,0).getRotated(t2+t+120,n);
+            ofVec3f rightVec = ofVec3f(radius*3,0,0).getRotated(t3+t+90+120,n);
+            ofVec3f leftVec = ofVec3f(radius*3,0,0).getRotated(t3+t+120,n);
             
             
             mesh3.addVertex(p+rightVec);

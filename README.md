@@ -27,3 +27,5 @@
 ![full sat shot 3](doc/P-fullSaturation3.jpg)
 ![full sat shot 4](doc/Q-fullSaturation4.jpg)
 ![full sat shot 5](doc/R-fullsat.jpg)
+![curly 1](doc/S-curly1.jpg)
+![curly 2](doc/T-curly2.jpg)

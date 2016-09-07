@@ -1,10 +1,12 @@
 <my_panel>
-	<radius>121.65</radius>
-	<colorA>255, 0, 71, 255</colorA>
-	<colorB>255, 255, 0, 255</colorB>
-	<colorC>100, 255, 48, 255</colorC>
+	<radius>5.95</radius>
+	<colorA>0, 0, 27, 255</colorA>
+	<colorB>255, 255, 255, 255</colorB>
+	<colorC>255, 255, 48, 255</colorC>
 	<colorD>32, 100, 255, 255</colorD>
 <my_panel/>
 <rot__speed>0.9</rot__speed>
-<redraw_background>0</redraw_background>
+<redraw_background>1</redraw_background>
+<z_pos>760</z_pos>
+	<twists>1</twists>
 </my_panel>
