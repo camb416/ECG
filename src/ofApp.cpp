@@ -176,17 +176,17 @@ void ofApp::draw(){
         ofNoFill();
         // c->draw();
         
-        int numSections = 256;
+        int numSections = 32;
         
         for(int j=0;j<numSections;j++){
             float t2 = (float)j/(float)numSections;
             float t3 = t2* 360.0f*(float)twists;
             while(t2>1.0f) t2-= 1.0f;
             ofVec3f p =c->plot3d(t2);
-            ofVec3f n = c->getNormal(t2) * 25.0f;
+            ofVec3f n = c->getNormal(t2).normalize() * 25.0f;
             
-            ofVec3f rightVec = ofVec3f(radius*2,0,0).getRotated(t3+t+90,n);
-            ofVec3f leftVec = ofVec3f(radius*2,0,0).getRotated(t3+t,n);
+            ofVec3f rightVec = ofVec3f(radius,0,0).getRotated(t3+t+90,n);
+            ofVec3f leftVec = ofVec3f(radius,0,0).getRotated(t3+t,n);
 
             mesh.addVertex(p+rightVec);
             mesh.addColor(ofColor(colorA));
@@ -200,10 +200,13 @@ void ofApp::draw(){
             //while(t2>1.0f) t2-= 1.0f;
              float t3 = t2* 360.0f*(float)twists;
             ofVec3f p =c->plot3d(t2);
-            ofVec3f n = c->getNormal(t2) * 25.0f;
+            ofVec3f n = c->getNormal(t2).normalize() * 25.0f;
+         
             
             ofVec3f rightVec = ofVec3f(radius,0,0).getRotated(t3+t+90+240,n);
             ofVec3f leftVec = ofVec3f(radius,0,0).getRotated(t3+t+240,n);
+            
+        
             
             mesh2.addVertex(p+rightVec);
             mesh2.addColor(ofColor(colorA));
@@ -218,10 +221,10 @@ void ofApp::draw(){
             while(t2>1.0f) t2-= 1.0f;
              float t3 = t2* 360.0f*(float)twists;
             ofVec3f p =c->plot3d(t2);
-            ofVec3f n = c->getNormal(t2) * 25.0f;
+            ofVec3f n = c->getNormal(t2).normalize() * 25.0f;
             
-            ofVec3f rightVec = ofVec3f(radius*3,0,0).getRotated(t3+t+90+120,n);
-            ofVec3f leftVec = ofVec3f(radius*3,0,0).getRotated(t3+t+120,n);
+            ofVec3f rightVec = ofVec3f(radius,0,0).getRotated(t3+t+90+120,n);
+            ofVec3f leftVec = ofVec3f(radius,0,0).getRotated(t3+t+120,n);
             
             
             mesh3.addVertex(p+rightVec);
@@ -235,7 +238,7 @@ void ofApp::draw(){
     }
     
   
-    for(int i=0;i<mesh.getNumVertices()-2;i+=2){
+    for(int i=0;i<mesh.getNumVertices()-3;i+=2){
         mesh.addIndex(i);
         mesh.addIndex(i+1);
         mesh.addIndex(i+2);
@@ -245,15 +248,15 @@ void ofApp::draw(){
         mesh.addIndex(i+1);
     }
     
-            mesh.addIndex(mesh.getNumVertices()-2);
-            mesh.addIndex(mesh.getNumVertices()-1);
-            mesh.addIndex(0);
+//            mesh.addIndex(mesh.getNumVertices()-2);
+//            mesh.addIndex(mesh.getNumVertices()-1);
+//            mesh.addIndex(0);
     
-    mesh.addIndex(0);
-    mesh.addIndex(1);
-    mesh.addIndex(mesh.getNumVertices()-1);
+//    mesh.addIndex(0);
+//    mesh.addIndex(1);
+//    mesh.addIndex(mesh.getNumVertices()-1);
 
-    for(int i=0;i<mesh2.getNumVertices()-2;i+=2){
+    for(int i=0;i<mesh2.getNumVertices()-3;i+=2){
         mesh2.addIndex(i);
         mesh2.addIndex(i+1);
         mesh2.addIndex(i+2);
@@ -263,15 +266,15 @@ void ofApp::draw(){
         mesh2.addIndex(i+1);
     }
     
-    mesh2.addIndex(mesh.getNumVertices()-2);
-    mesh2.addIndex(mesh.getNumVertices()-1);
-    mesh2.addIndex(0);
-    
-    mesh2.addIndex(0);
-    mesh2.addIndex(1);
-    mesh2.addIndex(mesh.getNumVertices()-1);
+//    mesh2.addIndex(mesh.getNumVertices()-2);
+//    mesh2.addIndex(mesh.getNumVertices()-1);
+//    mesh2.addIndex(0);
+//    
+//    mesh2.addIndex(0);
+//    mesh2.addIndex(1);
+//    mesh2.addIndex(mesh.getNumVertices()-1);
 
-    for(int i=0;i<mesh3.getNumVertices()-2;i+=2){
+    for(int i=0;i<mesh3.getNumVertices()-3;i+=2){
         mesh3.addIndex(i);
         mesh3.addIndex(i+1);
         mesh3.addIndex(i+2);
@@ -281,13 +284,13 @@ void ofApp::draw(){
         mesh3.addIndex(i+1);
     }
     
-    mesh3.addIndex(mesh.getNumVertices()-2);
-    mesh3.addIndex(mesh.getNumVertices()-1);
-    mesh3.addIndex(0);
-    
-    mesh3.addIndex(0);
-    mesh3.addIndex(1);
-    mesh3.addIndex(mesh.getNumVertices()-1);
+//    mesh3.addIndex(mesh.getNumVertices()-2);
+//    mesh3.addIndex(mesh.getNumVertices()-1);
+//    mesh3.addIndex(0);
+//    
+//    mesh3.addIndex(0);
+//    mesh3.addIndex(1);
+//    mesh3.addIndex(mesh.getNumVertices()-1);
     
     
     
