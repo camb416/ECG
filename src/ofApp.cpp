@@ -21,6 +21,7 @@ gui.add(radius.setup("radius", 10, 1, 200));
     gui.add(rotSpeed.setup("rot. speed",0.0f,-5.0f,5.0f));
     
     gui.add(bBackground.setup("redraw background", true));
+    gui.add(backgroundColor.setup("bg color",ofColor(0,0,0),ofColor(0,0),ofColor(255,255)));
 
     gui.loadFromFile("settings.xml");
     
@@ -100,7 +101,7 @@ gui.add(radius.setup("radius", 10, 1, 200));
     curve = new ofxCurve(a,b,c,d);
     
    
-    ofBackground(0);
+    ofBackground(backgroundColor);
     
     
 }
@@ -123,6 +124,8 @@ void ofApp::update(){
     ofEnableDepthTest();
     
      ofSetBackgroundAuto(bBackground);
+    
+    if(bBackground) ofBackground(backgroundColor);
  
 }
 
@@ -176,7 +179,7 @@ void ofApp::draw(){
         ofNoFill();
         // c->draw();
         
-        int numSections = 32;
+        int numSections = 256;
         
         for(int j=0;j<numSections;j++){
             float t2 = (float)j/(float)numSections;

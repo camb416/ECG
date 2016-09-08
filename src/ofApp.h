@@ -53,6 +53,7 @@ public:
     
 //    bool bBackground;
     ofxToggle bBackground;
+    ofxColorSlider backgroundColor;
 
     
     

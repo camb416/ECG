@@ -31,3 +31,4 @@
 ![curly 2](doc/T-curly2.jpg)
 ![wire](doc/U-wireframe.jpg)
 ![dot circles](doc/V-dots.jpg)
+![twists](doc/W-twist.jpg)
