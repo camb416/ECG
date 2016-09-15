@@ -1,3 +1,4 @@
+![dots and forms](doc/1_1_dotsAndForms.jpg)
 ![curvy](doc/1_0_curvy.jpg)
 ![twists](doc/Z-polytwist.jpg)
 ![twists](doc/Y-twists.jpg)
@@ -35,4 +36,4 @@
 ![Fourth screenshot](doc/3-includegallerytools.jpg)
 ![Third screenshot](doc/2-bezierworking.jpg)
 ![Second screenshot](doc/1-bezier.jpg)
-![First screenshot](doc/0-initialcommit.jpg)
+![First screenshot](doc/0-initialcommit.jpg)]
