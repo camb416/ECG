@@ -14,7 +14,7 @@ gui.add(radius.setup("radius", 10, 1, 200));
     gui.add(offset.setup("offset", 10.0f,0,180));
     gui.add(zPos.setup("z pos",600,0,1000));
     gui.add(twists.setup("twists",8,0,32));
-    
+    gui.add(numSections.setup("sections",64,4,1024));
     gui.add(colorA.setup("colorA", ofColor(100, 100, 140), ofColor(0, 0), ofColor(255, 255)));
     gui.add(colorB.setup("colorB", ofColor(100, 100, 140), ofColor(0, 0), ofColor(255, 255)));
     gui.add(colorC.setup("colorC", ofColor(100, 100, 140), ofColor(0, 0), ofColor(255, 255)));
@@ -181,7 +181,7 @@ void ofApp::draw(){
         ofNoFill();
         // c->draw();
         
-        int numSections = 256;
+       // int numSections = 256;
         
         for(int j=0;j<numSections;j++){
             float t2 = (float)j/(float)numSections;
@@ -189,17 +189,20 @@ void ofApp::draw(){
             while(t2>1.0f) t2-= 1.0f;
             ofVec3f p =c->plot3d(t2);
             ofVec3f d = c->getDirection(t2);
+            ofVec3f a = ofVec3f(0,0,1.0f);
             
-            ofVec3f a = ofVec3f(radius,0,0);
-            ofVec3f normal = a.getRotated(t3,d);
+            ofQuaternion q;
+            q.makeRotate(a,d);
             
-            ofVec3f rightVec = a.getRotated(t3+t,d);
-            ofVec3f leftVec = a.getRotated(t3+t+angleThickness,d);
+              ofVec3f myPoint = ofVec3f(cos((t3+t)*PI/180.0f)*radius,sin((t3+t)*PI/180.0f)*radius,0);
+            
+            ofVec3f rightVec = myPoint*q;
+
 
             mesh.addVertex(p+rightVec);
-            mesh.addColor(ofColor(colorA));
-            mesh.addVertex(p+leftVec);
             mesh.addColor(ofColor(colorB));
+            mesh.addVertex(p);
+            mesh.addColor(ofColor(colorA));
 
         }
         
@@ -209,21 +212,20 @@ void ofApp::draw(){
              float t3 = t2* 360.0f*(float)twists;
             ofVec3f p =c->plot3d(t2);
             ofVec3f d = c->getDirection(t2);
-         
+            ofVec3f a = ofVec3f(0,0,1.0f);
             
-            ofVec3f a = ofVec3f(radius,0,0);
-            ofVec3f normal = a.getRotated(t3,d);
+            ofQuaternion q;
+            q.makeRotate(a,d);
             
-            ofVec3f rightVec = a.getRotated(t3+t+offset,d);
-            ofVec3f leftVec = a.getRotated(t3+t+angleThickness+offset,d);
-
+            ofVec3f myPoint = ofVec3f(cos((t3+t+offset)*PI/180.0f)*radius,sin((t3+t+offset)*PI/180.0f)*radius,0);
             
+            ofVec3f rightVec = myPoint*q;
         
             
             mesh2.addVertex(p+rightVec);
-            mesh2.addColor(ofColor(colorA));
-            mesh2.addVertex(p+leftVec);
             mesh2.addColor(ofColor(colorC));
+            mesh2.addVertex(p);
+            mesh2.addColor(ofColor(colorA));
             
         }
     
@@ -234,18 +236,19 @@ void ofApp::draw(){
              float t3 = t2* 360.0f*(float)twists;
             ofVec3f p =c->plot3d(t2);
             ofVec3f d = c->getDirection(t2);
+            ofVec3f a = ofVec3f(0,0,1.0f);
             
-            ofVec3f a = ofVec3f(radius,0,0);
-            ofVec3f normal = a.getRotated(t3,d);
+            ofQuaternion q;
+            q.makeRotate(a,d);
             
-            ofVec3f rightVec = a.getRotated(t3+t+offset*2.0f,d);
-            ofVec3f leftVec = a.getRotated(t3+t+angleThickness+offset*2.0f,d);
+            ofVec3f myPoint = ofVec3f(cos((t3+t+offset*2.0f)*PI/180.0f)*radius,sin((t3+t+offset*2.0f)*PI/180.0f)*radius,0);
             
+            ofVec3f rightVec = myPoint*q;
             
             mesh3.addVertex(p+rightVec);
-            mesh3.addColor(ofColor(colorA));
-            mesh3.addVertex(p+leftVec);
             mesh3.addColor(ofColor(colorD));
+            mesh3.addVertex(p);
+            mesh3.addColor(ofColor(colorA));
             
         }
       
@@ -266,7 +269,7 @@ void ofApp::draw(){
 //            mesh.addIndex(mesh.getNumVertices()-2);
 //            mesh.addIndex(mesh.getNumVertices()-1);
 //            mesh.addIndex(0);
-    
+//    
 //    mesh.addIndex(0);
 //    mesh.addIndex(1);
 //    mesh.addIndex(mesh.getNumVertices()-1);

@@ -33,3 +33,4 @@
 ![dot circles](doc/V-dots.jpg)
 ![twists](doc/W-twist.jpg)
 ![twists](doc/X-twisty.jpg)
+![twists](doc/Y-twists.jpg)

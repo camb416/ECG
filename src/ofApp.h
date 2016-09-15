@@ -41,6 +41,7 @@ public:
     ofxFloatSlider offset;
     ofxFloatSlider zPos;
     ofxIntSlider twists;
+    ofxIntSlider numSections;
     
     ofxColorSlider colorA;
     
