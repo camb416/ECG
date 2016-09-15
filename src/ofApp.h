@@ -37,6 +37,8 @@ public:
     // GUI stuff
     
     ofxFloatSlider radius;
+    ofxFloatSlider angleThickness;
+    ofxFloatSlider offset;
     ofxFloatSlider zPos;
     ofxIntSlider twists;
     

@@ -10,6 +10,8 @@ void ofApp::setup(){
     // gui stuff
     gui.setup("my panel"); // most of the time you don't need a name
 gui.add(radius.setup("radius", 10, 1, 200));
+    gui.add(angleThickness.setup("angle thick", 10,2,180));
+    gui.add(offset.setup("offset", 10.0f,0,180));
     gui.add(zPos.setup("z pos",600,0,1000));
     gui.add(twists.setup("twists",8,0,32));
     
@@ -186,10 +188,13 @@ void ofApp::draw(){
             float t3 = t2* 360.0f*(float)twists;
             while(t2>1.0f) t2-= 1.0f;
             ofVec3f p =c->plot3d(t2);
-            ofVec3f n = c->getNormal(t2).normalize() * 25.0f;
+            ofVec3f d = c->getDirection(t2);
             
-            ofVec3f rightVec = ofVec3f(radius,0,0).getRotated(t3+t+90,n);
-            ofVec3f leftVec = ofVec3f(radius,0,0).getRotated(t3+t,n);
+            ofVec3f a = ofVec3f(radius,0,0);
+            ofVec3f normal = a.getRotated(t3,d);
+            
+            ofVec3f rightVec = a.getRotated(t3+t,d);
+            ofVec3f leftVec = a.getRotated(t3+t+angleThickness,d);
 
             mesh.addVertex(p+rightVec);
             mesh.addColor(ofColor(colorA));
@@ -203,11 +208,15 @@ void ofApp::draw(){
             //while(t2>1.0f) t2-= 1.0f;
              float t3 = t2* 360.0f*(float)twists;
             ofVec3f p =c->plot3d(t2);
-            ofVec3f n = c->getNormal(t2).normalize() * 25.0f;
+            ofVec3f d = c->getDirection(t2);
          
             
-            ofVec3f rightVec = ofVec3f(radius,0,0).getRotated(t3+t+90+240,n);
-            ofVec3f leftVec = ofVec3f(radius,0,0).getRotated(t3+t+240,n);
+            ofVec3f a = ofVec3f(radius,0,0);
+            ofVec3f normal = a.getRotated(t3,d);
+            
+            ofVec3f rightVec = a.getRotated(t3+t+offset,d);
+            ofVec3f leftVec = a.getRotated(t3+t+angleThickness+offset,d);
+
             
         
             
@@ -224,10 +233,13 @@ void ofApp::draw(){
             while(t2>1.0f) t2-= 1.0f;
              float t3 = t2* 360.0f*(float)twists;
             ofVec3f p =c->plot3d(t2);
-            ofVec3f n = c->getNormal(t2).normalize() * 25.0f;
+            ofVec3f d = c->getDirection(t2);
             
-            ofVec3f rightVec = ofVec3f(radius,0,0).getRotated(t3+t+90+120,n);
-            ofVec3f leftVec = ofVec3f(radius,0,0).getRotated(t3+t+120,n);
+            ofVec3f a = ofVec3f(radius,0,0);
+            ofVec3f normal = a.getRotated(t3,d);
+            
+            ofVec3f rightVec = a.getRotated(t3+t+offset*2.0f,d);
+            ofVec3f leftVec = a.getRotated(t3+t+angleThickness+offset*2.0f,d);
             
             
             mesh3.addVertex(p+rightVec);

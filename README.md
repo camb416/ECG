@@ -32,3 +32,4 @@
 ![wire](doc/U-wireframe.jpg)
 ![dot circles](doc/V-dots.jpg)
 ![twists](doc/W-twist.jpg)
+![twists](doc/X-twisty.jpg)
