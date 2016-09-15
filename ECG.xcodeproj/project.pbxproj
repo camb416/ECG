@@ -10,8 +10,10 @@
 		1B5F996886A777589D5DD794 /* svgtiny_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 077F7AC989DAB289A1EC643F /* svgtiny_list.cpp */; };
 		1CD33E884D9E3358252E82A1 /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 907C5B5E104864A2D3A25745 /* ofxToggle.cpp */; };
 		1D6B78EF041B097CE4F423C4 /* svgtiny.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38BC601AD0A2F4F2319D1460 /* svgtiny.cpp */; };
-		258404D91D58E89300489D36 /* ofxCurve.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 258404CD1D58E89300489D36 /* ofxCurve.cpp */; };
-		258404DA1D58E89300489D36 /* ofxSkinnedCurve.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 258404CF1D58E89300489D36 /* ofxSkinnedCurve.cpp */; };
+		250489651D679FE8000431E1 /* ofxCurve.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250489611D679FE8000431E1 /* ofxCurve.cpp */; };
+		250489661D679FE8000431E1 /* ofxSkinnedCurve.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250489631D679FE8000431E1 /* ofxSkinnedCurve.cpp */; };
+		25350A5F1D6BE4600005CA33 /* ofxCsv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25350A571D6BE4600005CA33 /* ofxCsv.cpp */; };
+		25350A601D6BE4600005CA33 /* ofxCsvRow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25350A591D6BE4600005CA33 /* ofxCsvRow.cpp */; };
 		4294163B15857489B2176769 /* svgtiny_gradient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 582921BA98D224ED41833868 /* svgtiny_gradient.cpp */; };
 		483908258D00B98B4BE69F07 /* ofxLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78D67A00EB899FAC09430597 /* ofxLabel.cpp */; };
 		5CBB2AB3A60F65431D7B555D /* ofxButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C88333E71C9457E441C33474 /* ofxButton.cpp */; };
@@ -62,10 +64,14 @@
 		15F2C6477A769C03A56D1401 /* ofxSlider.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxSlider.cpp; path = ../../../addons/ofxGui/src/ofxSlider.cpp; sourceTree = SOURCE_ROOT; };
 		17E65988300FBD9AAA2CD0CA /* ofxGui.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxGui.h; path = ../../../addons/ofxGui/src/ofxGui.h; sourceTree = SOURCE_ROOT; };
 		1C0DA2561397A7DE0246858B /* ofxGuiGroup.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxGuiGroup.h; path = ../../../addons/ofxGui/src/ofxGuiGroup.h; sourceTree = SOURCE_ROOT; };
-		258404CD1D58E89300489D36 /* ofxCurve.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCurve.cpp; sourceTree = "<group>"; };
-		258404CE1D58E89300489D36 /* ofxCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCurve.h; sourceTree = "<group>"; };
-		258404CF1D58E89300489D36 /* ofxSkinnedCurve.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSkinnedCurve.cpp; sourceTree = "<group>"; };
-		258404D01D58E89300489D36 /* ofxSkinnedCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSkinnedCurve.h; sourceTree = "<group>"; };
+		250489611D679FE8000431E1 /* ofxCurve.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCurve.cpp; sourceTree = "<group>"; };
+		250489621D679FE8000431E1 /* ofxCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCurve.h; sourceTree = "<group>"; };
+		250489631D679FE8000431E1 /* ofxSkinnedCurve.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSkinnedCurve.cpp; sourceTree = "<group>"; };
+		250489641D679FE8000431E1 /* ofxSkinnedCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSkinnedCurve.h; sourceTree = "<group>"; };
+		25350A571D6BE4600005CA33 /* ofxCsv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCsv.cpp; sourceTree = "<group>"; };
+		25350A581D6BE4600005CA33 /* ofxCsv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCsv.h; sourceTree = "<group>"; };
+		25350A591D6BE4600005CA33 /* ofxCsvRow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCsvRow.cpp; sourceTree = "<group>"; };
+		25350A5A1D6BE4600005CA33 /* ofxCsvRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCsvRow.h; sourceTree = "<group>"; };
 		27DFA5E4C611C297AADB2002 /* src_colors.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = src_colors.cpp; path = ../../../addons/ofxSvg/libs/svgTiny/src/src_colors.cpp; sourceTree = SOURCE_ROOT; };
 		2834D88A62CD23F3DE2C47D1 /* ofxButton.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxButton.h; path = ../../../addons/ofxGui/src/ofxButton.h; sourceTree = SOURCE_ROOT; };
 		38BC601AD0A2F4F2319D1460 /* svgtiny.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = svgtiny.cpp; path = ../../../addons/ofxSvg/libs/svgTiny/src/svgtiny.cpp; sourceTree = SOURCE_ROOT; };
@@ -108,24 +114,53 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2504895E1D679FE8000431E1 /* ofxCurves */ = {
+			isa = PBXGroup;
+			children = (
+				250489601D679FE8000431E1 /* src */,
+			);
+			path = ofxCurves;
+			sourceTree = "<group>";
+		};
+		250489601D679FE8000431E1 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				250489611D679FE8000431E1 /* ofxCurve.cpp */,
+				250489621D679FE8000431E1 /* ofxCurve.h */,
+				250489631D679FE8000431E1 /* ofxSkinnedCurve.cpp */,
+				250489641D679FE8000431E1 /* ofxSkinnedCurve.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		25350A451D6BE4600005CA33 /* ofxCsv */ = {
+			isa = PBXGroup;
+			children = (
+				25350A561D6BE4600005CA33 /* src */,
+			);
+			name = ofxCsv;
+			path = ../ofxCsv;
+			sourceTree = "<group>";
+		};
+		25350A561D6BE4600005CA33 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				25350A571D6BE4600005CA33 /* ofxCsv.cpp */,
+				25350A581D6BE4600005CA33 /* ofxCsv.h */,
+				25350A591D6BE4600005CA33 /* ofxCsvRow.cpp */,
+				25350A5A1D6BE4600005CA33 /* ofxCsvRow.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		258404CB1D58E89300489D36 /* gallery-tools */ = {
 			isa = PBXGroup;
 			children = (
-				258404CC1D58E89300489D36 /* ofxCurves */,
+				25350A451D6BE4600005CA33 /* ofxCsv */,
+				2504895E1D679FE8000431E1 /* ofxCurves */,
 			);
 			name = "gallery-tools";
 			path = "../../../addons/gallery-tools";
-			sourceTree = "<group>";
-		};
-		258404CC1D58E89300489D36 /* ofxCurves */ = {
-			isa = PBXGroup;
-			children = (
-				258404CD1D58E89300489D36 /* ofxCurve.cpp */,
-				258404CE1D58E89300489D36 /* ofxCurve.h */,
-				258404CF1D58E89300489D36 /* ofxSkinnedCurve.cpp */,
-				258404D01D58E89300489D36 /* ofxSkinnedCurve.h */,
-			);
-			path = ofxCurves;
 			sourceTree = "<group>";
 		};
 		31941BAC71B339F7A3E32124 /* svgTiny */ = {
@@ -351,7 +386,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				258404DA1D58E89300489D36 /* ofxSkinnedCurve.cpp in Sources */,
+				250489661D679FE8000431E1 /* ofxSkinnedCurve.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				856AA354D08AB4B323081444 /* ofxBaseGui.cpp in Sources */,
@@ -364,10 +399,12 @@
 				1CD33E884D9E3358252E82A1 /* ofxToggle.cpp in Sources */,
 				B88A57B4B0BA6191EF3571E9 /* ofxSvg.cpp in Sources */,
 				6A565A9714A6A12EB9098F52 /* src_colors.cpp in Sources */,
+				25350A5F1D6BE4600005CA33 /* ofxCsv.cpp in Sources */,
 				1D6B78EF041B097CE4F423C4 /* svgtiny.cpp in Sources */,
+				25350A601D6BE4600005CA33 /* ofxCsvRow.cpp in Sources */,
 				4294163B15857489B2176769 /* svgtiny_gradient.cpp in Sources */,
 				1B5F996886A777589D5DD794 /* svgtiny_list.cpp in Sources */,
-				258404D91D58E89300489D36 /* ofxCurve.cpp in Sources */,
+				250489651D679FE8000431E1 /* ofxCurve.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
