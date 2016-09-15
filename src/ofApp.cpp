@@ -222,7 +222,7 @@ void ofApp::draw(){
             ofVec3f myPoint = ofVec3f(cos((t3+t+offset)*PI/180.0f)*radius,sin((t3+t+offset)*PI/180.0f)*radius,0);
             
             ofVec3f rightVec = myPoint*q;
-            myPoint = ofVec3f(cos((t3+t+angleThickness)*PI/180.0f)*radius,sin((t3+t+angleThickness)*PI/180.0f)*radius,0);
+            myPoint = ofVec3f(cos((t3+t+angleThickness+offset)*PI/180.0f)*radius,sin((t3+t+offset+angleThickness)*PI/180.0f)*radius,0);
             
             ofVec3f leftVec = myPoint*q;
             
@@ -248,7 +248,7 @@ void ofApp::draw(){
             ofVec3f myPoint = ofVec3f(cos((t3+t+offset*2.0f)*PI/180.0f)*radius,sin((t3+t+offset*2.0f)*PI/180.0f)*radius,0);
             
             ofVec3f rightVec = myPoint*q;
-            myPoint = ofVec3f(cos((t3+t+angleThickness)*PI/180.0f)*radius,sin((t3+t+angleThickness)*PI/180.0f)*radius,0);
+            myPoint = ofVec3f(cos((t3+t+angleThickness+offset*2.0f)*PI/180.0f)*radius,sin((t3+t+angleThickness+offset*2.0f)*PI/180.0f)*radius,0);
             
             ofVec3f leftVec = myPoint*q;
             
