@@ -197,11 +197,13 @@ void ofApp::draw(){
               ofVec3f myPoint = ofVec3f(cos((t3+t)*PI/180.0f)*radius,sin((t3+t)*PI/180.0f)*radius,0);
             
             ofVec3f rightVec = myPoint*q;
+            myPoint = ofVec3f(cos((t3+t+angleThickness)*PI/180.0f)*radius,sin((t3+t+angleThickness)*PI/180.0f)*radius,0);
 
-
+            ofVec3f leftVec = myPoint*q;
+            
             mesh.addVertex(p+rightVec);
             mesh.addColor(ofColor(colorB));
-            mesh.addVertex(p);
+            mesh.addVertex(p+leftVec);
             mesh.addColor(ofColor(colorA));
 
         }
@@ -220,11 +222,13 @@ void ofApp::draw(){
             ofVec3f myPoint = ofVec3f(cos((t3+t+offset)*PI/180.0f)*radius,sin((t3+t+offset)*PI/180.0f)*radius,0);
             
             ofVec3f rightVec = myPoint*q;
-        
+            myPoint = ofVec3f(cos((t3+t+angleThickness)*PI/180.0f)*radius,sin((t3+t+angleThickness)*PI/180.0f)*radius,0);
+            
+            ofVec3f leftVec = myPoint*q;
             
             mesh2.addVertex(p+rightVec);
             mesh2.addColor(ofColor(colorC));
-            mesh2.addVertex(p);
+            mesh2.addVertex(p+leftVec);
             mesh2.addColor(ofColor(colorA));
             
         }
@@ -244,10 +248,14 @@ void ofApp::draw(){
             ofVec3f myPoint = ofVec3f(cos((t3+t+offset*2.0f)*PI/180.0f)*radius,sin((t3+t+offset*2.0f)*PI/180.0f)*radius,0);
             
             ofVec3f rightVec = myPoint*q;
+            myPoint = ofVec3f(cos((t3+t+angleThickness)*PI/180.0f)*radius,sin((t3+t+angleThickness)*PI/180.0f)*radius,0);
+            
+            ofVec3f leftVec = myPoint*q;
+            
             
             mesh3.addVertex(p+rightVec);
             mesh3.addColor(ofColor(colorD));
-            mesh3.addVertex(p);
+            mesh3.addVertex(p+leftVec);
             mesh3.addColor(ofColor(colorA));
             
         }

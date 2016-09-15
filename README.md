@@ -34,3 +34,4 @@
 ![twists](doc/W-twist.jpg)
 ![twists](doc/X-twisty.jpg)
 ![twists](doc/Y-twists.jpg)
+![twists](doc/Z-polytwist.jpg)
