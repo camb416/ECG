@@ -36,4 +36,4 @@
 ![Fourth screenshot](doc/3-includegallerytools.jpg)
 ![Third screenshot](doc/2-bezierworking.jpg)
 ![Second screenshot](doc/1-bezier.jpg)
-![First screenshot](doc/0-initialcommit.jpg)]
+![First screenshot](doc/0-initialcommit.jpg)
