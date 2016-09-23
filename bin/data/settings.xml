@@ -13,4 +13,7 @@
 <angle_thick>109.69</angle_thick>
 	<offset>127.8</offset>
 <sections>131</sections>
+<draw_curve_1>1</draw_curve_1>
+	<draw_curve_2>0</draw_curve_2>
+	<draw_curve_3>0</draw_curve_3>
 </my_panel>

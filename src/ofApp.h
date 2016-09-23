@@ -57,7 +57,10 @@ public:
 //    bool bBackground;
     ofxToggle bBackground;
     ofxColorSlider backgroundColor;
+    
+    ofxToggle bDrawCurve1, bDrawCurve2, bDrawCurve3;
 
+    ofxIntSlider res;
     
     
     

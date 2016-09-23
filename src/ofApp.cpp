@@ -2,6 +2,8 @@
 
 int drawFaces;
 
+
+
 //--------------------------------------------------------------
 void ofApp::setup(){
     
@@ -24,6 +26,13 @@ gui.add(radius.setup("radius", 10, 1, 200));
     
     gui.add(bBackground.setup("redraw background", true));
     gui.add(backgroundColor.setup("bg color",ofColor(0,0,0),ofColor(0,0),ofColor(255,255)));
+    
+    gui.add(bDrawCurve1.setup("draw curve 1", true));
+    gui.add(bDrawCurve2.setup("draw curve 2", true));
+    gui.add(bDrawCurve3.setup("draw curve 3", true));
+    
+    gui.add(res.setup("res",8,3,64));
+    
 
     gui.loadFromFile("settings.xml");
     
@@ -169,7 +178,7 @@ void ofApp::draw(){
     ofMesh mesh;
     ofMesh mesh2;
     ofMesh mesh3;
-    mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
+    mesh.setMode(OF_PRIMITIVE_TRIANGLES);
     mesh2.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
      mesh3.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
     //mesh.setupIndicesAuto();
@@ -184,6 +193,25 @@ void ofApp::draw(){
        // int numSections = 256;
         
         for(int j=0;j<numSections;j++){
+            
+     
+            
+            for(int k=0;k<res;k++){
+                // do something here.
+                ofVec3f p =c->plot3d((float)j/(float)numSections);
+                ofVec3f d = c->getDirection((float)j/(float)numSections);
+                ofVec3f a = ofVec3f(0,0,1.0f);
+                ofQuaternion q;
+                q.makeRotate(a,d);
+                ofVec3f myPoint = ofVec3f(cos((float)k/(float)res*TWO_PI)*radius,sin((float)k/(float)res*TWO_PI)*radius,0);
+                mesh.addVertex(p+myPoint*q);
+                ofColor thisColor = colorB;
+                if(k%2==0) thisColor = colorA;
+                
+                mesh.addColor(thisColor);
+                
+            }
+            
             float t2 = (float)j/(float)numSections;
             float t3 = t2* 360.0f*(float)twists;
             while(t2>1.0f) t2-= 1.0f;
@@ -201,10 +229,11 @@ void ofApp::draw(){
 
             ofVec3f leftVec = myPoint*q;
             
-            mesh.addVertex(p+rightVec);
-            mesh.addColor(ofColor(colorB));
-            mesh.addVertex(p+leftVec);
-            mesh.addColor(ofColor(colorA));
+//            mesh.addVertex(p+rightVec);
+//            mesh.addColor(ofColor(colorB));
+//            mesh.addVertex(p+leftVec);
+//            mesh.addColor(ofColor(colorA));
+            
 
         }
         
@@ -264,14 +293,14 @@ void ofApp::draw(){
     }
     
   
-    for(int i=0;i<mesh.getNumVertices()-3;i+=2){
+    for(int i=0;i<mesh.getNumVertices()-res-1;i+=1){
         mesh.addIndex(i);
+        mesh.addIndex(i+res);
         mesh.addIndex(i+1);
-        mesh.addIndex(i+2);
         
-        mesh.addIndex(i+2);
-        mesh.addIndex(i+3);
         mesh.addIndex(i+1);
+        mesh.addIndex(i+res);
+        mesh.addIndex(i+res+1);
     }
     
 //            mesh.addIndex(mesh.getNumVertices()-2);
@@ -323,17 +352,17 @@ void ofApp::draw(){
     ofSetColor(255);
     
     if(drawFaces == 0){
-        mesh.drawFaces();
-        mesh2.drawFaces();
-        mesh3.drawFaces();
+       if(bDrawCurve1) mesh.drawFaces();
+       if(bDrawCurve2) mesh2.drawFaces();
+       if(bDrawCurve3) mesh3.drawFaces();
     } else if(drawFaces == 1) {
-        mesh.drawVertices();
-        mesh2.drawVertices();
-        mesh3.drawVertices();
+       if(bDrawCurve1) mesh.drawVertices();
+       if(bDrawCurve2) mesh2.drawVertices();
+       if(bDrawCurve3) mesh3.drawVertices();
     } else if(drawFaces == 2){
-        mesh.drawWireframe();
-        mesh2.drawWireframe();
-         mesh3.drawWireframe();
+       if(bDrawCurve1) mesh.drawWireframe();
+       if(bDrawCurve2) mesh2.drawWireframe();
+       if(bDrawCurve3)  mesh3.drawWireframe();
     }
     ofPopMatrix();
     
