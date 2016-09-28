@@ -1,3 +1,4 @@
+![sliced tubes](doc/1_3_slicedTube.jpg)
 ![tubes](doc/1_2_tube.jpg)
 ![dots and forms](doc/1_1_dotsAndForms.jpg)
 ![curvy](doc/1_0_curvy.jpg)
@@ -38,4 +39,3 @@
 ![Third screenshot](doc/2-bezierworking.jpg)
 ![Second screenshot](doc/1-bezier.jpg)
 ![First screenshot](doc/0-initialcommit.jpg)
-

@@ -24,7 +24,7 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
-    ofxCurve * curve;
+    // ofxCurve * curve;
     float t;
     
     vector<ofxCurve*> curves;
@@ -37,31 +37,24 @@ public:
     // GUI stuff
     
     ofxFloatSlider radius;
-    ofxFloatSlider angleThickness;
-    ofxFloatSlider offset;
     ofxFloatSlider zPos;
     ofxIntSlider twists;
+    ofxIntSlider res;
     ofxIntSlider numSections;
     
     ofxColorSlider colorA;
     
-     ofxColorSlider colorB;
-     ofxColorSlider colorC;
-     ofxColorSlider colorD;
+    ofxColorSlider colorB;
+    ofxColorSlider colorC;
+    ofxColorSlider colorD;
     
     ofxFloatSlider rotSpeed;
     
     ofxPanel gui;
     bool bHide;
     
-//    bool bBackground;
+    //    bool bBackground;
     ofxToggle bBackground;
     ofxColorSlider backgroundColor;
-    
-    ofxToggle bDrawCurve1, bDrawCurve2, bDrawCurve3;
-
-    ofxIntSlider res;
-    
-    
     
 };

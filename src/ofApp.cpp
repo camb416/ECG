@@ -2,21 +2,19 @@
 
 int drawFaces;
 
-
-
 //--------------------------------------------------------------
 void ofApp::setup(){
-    
     ofSetVerticalSync(true);
-
+    
     // gui stuff
     gui.setup("my panel"); // most of the time you don't need a name
-gui.add(radius.setup("radius", 10, 1, 200));
-    gui.add(angleThickness.setup("angle thick", 10,2,180));
-    gui.add(offset.setup("offset", 10.0f,0,180));
+    gui.add(radius.setup("radius", 10, 1, 200));
     gui.add(zPos.setup("z pos",600,0,1000));
     gui.add(twists.setup("twists",8,0,32));
-    gui.add(numSections.setup("sections",64,4,1024));
+    
+    gui.add(res.setup("res",6,3,32));
+    gui.add(numSections.setup("sections",8,4,64));
+    
     gui.add(colorA.setup("colorA", ofColor(100, 100, 140), ofColor(0, 0), ofColor(255, 255)));
     gui.add(colorB.setup("colorB", ofColor(100, 100, 140), ofColor(0, 0), ofColor(255, 255)));
     gui.add(colorC.setup("colorC", ofColor(100, 100, 140), ofColor(0, 0), ofColor(255, 255)));
@@ -27,21 +25,9 @@ gui.add(radius.setup("radius", 10, 1, 200));
     gui.add(bBackground.setup("redraw background", true));
     gui.add(backgroundColor.setup("bg color",ofColor(0,0,0),ofColor(0,0),ofColor(255,255)));
     
-    gui.add(bDrawCurve1.setup("draw curve 1", true));
-    gui.add(bDrawCurve2.setup("draw curve 2", true));
-    gui.add(bDrawCurve3.setup("draw curve 3", true));
-    
-    gui.add(res.setup("res",8,3,64));
-    
-
     gui.loadFromFile("settings.xml");
     
-    bHide = false;
-
     
-    capture = false;
-    
-    drawFaces = 0;
     
     // Load a CSV File.
     if(csv.load("curves.csv")) {
@@ -104,97 +90,63 @@ gui.add(radius.setup("radius", 10, 1, 200));
     
     
     
-    a.set(0,0,0);
-    b.set(200,0,0);
-    c.set(0,200,200);
-    d.set(0,200,0);
     
-    curve = new ofxCurve(a,b,c,d);
+    bHide = false;
     
-   
-    ofBackground(backgroundColor);
     
+    capture = false;
+    
+    drawFaces = 0;
+    
+    // ofVec3f a,b,c,d;
+    
+    //    a.set(0,0,0);
+    //    b.set(200,0,0);
+    //    c.set(0,200,200);
+    //    d.set(0,200,0);
+    //
+    //    curve = new ofxCurve(a,b,c,d);
+    
+    zPos = 0;
+    
+    t = 0.0f;
+    ofSetBackgroundAuto(true);
     
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    curve->update();
-    
-    t += rotSpeed;
-    
-    while(t>360.0f) t -=360.0f;
-    
     for(int i=0;i<curves.size();i++){
-        ofxCurve * c = curves.at(i);
-        ofSetColor(255);
-        ofNoFill();
-        c->update();
+        curves.at(i)->update();
     }
-    
-    ofEnableDepthTest();
-    
-     ofSetBackgroundAuto(bBackground);
-    
-    if(bBackground) ofBackground(backgroundColor);
- 
+    t += 0.003f;
+    while(t>1.0f) t -= 1.0f;
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    
-    //we don't want to capture every frame
-    //so we only capture one frame when capture
-    //is set to true
-    //    if(capture){
-    //        output.beginEPS("test.ps");
-    //    }
-    //
-    //    output.noFill();
-    
-    //ofBackground(0);
-    
-    
-    ofPushMatrix();
-    ofTranslate(ofGetWidth()/2,ofGetHeight()/2,zPos);
-    
-    
-    ofRotateY((float)mouseX);
-    ofRotateX((float)mouseY);
-    
-    ofTranslate(-150,-150,0);
-    
-    ofPoint pt = curve->plot3d(t);
-    
-    // ofDrawEllipse(pt.x,pt.y,pt.z,10,10);
-    
-    
-    
-    ofNoFill();
-    ofSetColor(0);
-    // curve->draw();
-    
+    // if(ofGetFrameNum()%30==0) ofLog() << curves.size();
     
     ofMesh mesh;
-    ofMesh mesh2;
-    ofMesh mesh3;
+    
     mesh.setMode(OF_PRIMITIVE_TRIANGLES);
-    mesh2.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
-     mesh3.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
-    //mesh.setupIndicesAuto();
+    
+//    int numSections = 8;
+//    int res = 6;
+    
+    //ofColor colorA,colorB,colorC;
+    //colorA = colorB = colorC = ofColor(255,0,255);
+    
+    
+    ////////////////////////////////////////////////////////////////////////////////
     
     for(int i=0;i<curves.size();i++){
+        
         ofxCurve * c = curves.at(i);
-        ofSetColor(0);
-        
-        ofNoFill();
-        // c->draw();
-        
-       // int numSections = 256;
         
         for(int j=0;j<numSections;j++){
             
-     
+            
             
             for(int k=0;k<res;k++){
                 // do something here.
@@ -207,186 +159,209 @@ void ofApp::draw(){
                 mesh.addVertex(p+myPoint*q);
                 ofColor thisColor = colorB;
                 if(k%2==0) thisColor = colorA;
-                
+                if(j==0 && i==0) thisColor = colorC;
                 mesh.addColor(thisColor);
                 
             }
+            /*
+             for(int k=0;k<res;k++){
+             // do something here.
+             ofVec3f p =c->plot3d((float)j/(float)numSections);
+             ofVec3f d = c->getDirection((float)j/(float)numSections);
+             ofVec3f a = ofVec3f(0,0,1.0f);
+             ofQuaternion q;
+             q.makeRotate(a,d);
+             ofVec3f myPoint = ofVec3f(cos((float)k/(float)res*TWO_PI)*radius,sin((float)k/(float)res*TWO_PI)*radius,0);
+             mesh.addVertex(p+myPoint*q);
+             ofColor thisColor = colorB;
+             if(k%2==0) thisColor = colorA;
+             if(j==0 && i==0) thisColor = colorC;
+             mesh.addColor(thisColor);
+             
+             }*/
             
-            float t2 = (float)j/(float)numSections;
-            float t3 = t2* 360.0f*(float)twists;
-            while(t2>1.0f) t2-= 1.0f;
-            ofVec3f p =c->plot3d(t2);
-            ofVec3f d = c->getDirection(t2);
-            ofVec3f a = ofVec3f(0,0,1.0f);
             
-            ofQuaternion q;
-            q.makeRotate(a,d);
             
-              ofVec3f myPoint = ofVec3f(cos((t3+t)*PI/180.0f)*radius,sin((t3+t)*PI/180.0f)*radius,0);
             
-            ofVec3f rightVec = myPoint*q;
-            myPoint = ofVec3f(cos((t3+t+angleThickness)*PI/180.0f)*radius,sin((t3+t+angleThickness)*PI/180.0f)*radius,0);
-
-            ofVec3f leftVec = myPoint*q;
             
-//            mesh.addVertex(p+rightVec);
-//            mesh.addColor(ofColor(colorB));
-//            mesh.addVertex(p+leftVec);
-//            mesh.addColor(ofColor(colorA));
-            
-
-        }
-        
-        for(int j=0;j<numSections;j++){
-            float t2 = (float)j/(float)numSections;
-            //while(t2>1.0f) t2-= 1.0f;
-             float t3 = t2* 360.0f*(float)twists;
-            ofVec3f p =c->plot3d(t2);
-            ofVec3f d = c->getDirection(t2);
-            ofVec3f a = ofVec3f(0,0,1.0f);
-            
-            ofQuaternion q;
-            q.makeRotate(a,d);
-            
-            ofVec3f myPoint = ofVec3f(cos((t3+t+offset)*PI/180.0f)*radius,sin((t3+t+offset)*PI/180.0f)*radius,0);
-            
-            ofVec3f rightVec = myPoint*q;
-            myPoint = ofVec3f(cos((t3+t+angleThickness+offset)*PI/180.0f)*radius,sin((t3+t+offset+angleThickness)*PI/180.0f)*radius,0);
-            
-            ofVec3f leftVec = myPoint*q;
-            
-            mesh2.addVertex(p+rightVec);
-            mesh2.addColor(ofColor(colorC));
-            mesh2.addVertex(p+leftVec);
-            mesh2.addColor(ofColor(colorA));
             
         }
-    
-        
-        for(int j=0;j<numSections;j++){
-            float t2 = (float)j/(float)numSections;
-            while(t2>1.0f) t2-= 1.0f;
-             float t3 = t2* 360.0f*(float)twists;
-            ofVec3f p =c->plot3d(t2);
-            ofVec3f d = c->getDirection(t2);
-            ofVec3f a = ofVec3f(0,0,1.0f);
+    }
+    for(int i=0;i<mesh.getNumVertices()-res;i+=res){
+        //            mesh.addIndex(i);
+        //            mesh.addIndex(i+res);
+        //            mesh.addIndex(i+res-1);
+        for(int j=i;j<i+res-1;j++){
+            mesh.addIndex(j);
+            mesh.addIndex(j+res);
+            mesh.addIndex(j+1);
             
-            ofQuaternion q;
-            q.makeRotate(a,d);
-            
-            ofVec3f myPoint = ofVec3f(cos((t3+t+offset*2.0f)*PI/180.0f)*radius,sin((t3+t+offset*2.0f)*PI/180.0f)*radius,0);
-            
-            ofVec3f rightVec = myPoint*q;
-            myPoint = ofVec3f(cos((t3+t+angleThickness+offset*2.0f)*PI/180.0f)*radius,sin((t3+t+angleThickness+offset*2.0f)*PI/180.0f)*radius,0);
-            
-            ofVec3f leftVec = myPoint*q;
-            
-            
-            mesh3.addVertex(p+rightVec);
-            mesh3.addColor(ofColor(colorD));
-            mesh3.addVertex(p+leftVec);
-            mesh3.addColor(ofColor(colorA));
-            
+            mesh.addIndex(j+1);
+            mesh.addIndex(j+res);
+            mesh.addIndex(j+res+1);
         }
-      
-        
+        //            mesh.addIndex(i+res-1);
+        //            mesh.addIndex(i+res-1+res);
+        //            mesh.addIndex(i+res-1+res+1);
     }
     
-  
-    for(int i=0;i<mesh.getNumVertices()-res-1;i+=1){
+    int offset = 0;
+    for(int i=mesh.getNumVertices()-res;i<mesh.getNumVertices()-1;i++){
         mesh.addIndex(i);
-        mesh.addIndex(i+res);
+        mesh.addIndex(offset);
         mesh.addIndex(i+1);
         
         mesh.addIndex(i+1);
-        mesh.addIndex(i+res);
-        mesh.addIndex(i+res+1);
+        mesh.addIndex(offset);
+        mesh.addIndex(offset+1);
+        offset++;
     }
-    
-//            mesh.addIndex(mesh.getNumVertices()-2);
-//            mesh.addIndex(mesh.getNumVertices()-1);
-//            mesh.addIndex(0);
-//    
-//    mesh.addIndex(0);
-//    mesh.addIndex(1);
-//    mesh.addIndex(mesh.getNumVertices()-1);
 
-    for(int i=0;i<mesh2.getNumVertices()-3;i+=2){
-        mesh2.addIndex(i);
-        mesh2.addIndex(i+1);
-        mesh2.addIndex(i+2);
-        
-        mesh2.addIndex(i+2);
-        mesh2.addIndex(i+3);
-        mesh2.addIndex(i+1);
-    }
     
-//    mesh2.addIndex(mesh.getNumVertices()-2);
-//    mesh2.addIndex(mesh.getNumVertices()-1);
-//    mesh2.addIndex(0);
-//    
-//    mesh2.addIndex(0);
-//    mesh2.addIndex(1);
-//    mesh2.addIndex(mesh.getNumVertices()-1);
-
-    for(int i=0;i<mesh3.getNumVertices()-3;i+=2){
-        mesh3.addIndex(i);
-        mesh3.addIndex(i+1);
-        mesh3.addIndex(i+2);
-        
-        mesh3.addIndex(i+2);
-        mesh3.addIndex(i+3);
-        mesh3.addIndex(i+1);
-    }
-    
-//    mesh3.addIndex(mesh.getNumVertices()-2);
-//    mesh3.addIndex(mesh.getNumVertices()-1);
-//    mesh3.addIndex(0);
-//    
-//    mesh3.addIndex(0);
-//    mesh3.addIndex(1);
-//    mesh3.addIndex(mesh.getNumVertices()-1);
+    ////////////////////////////////////////////////////////////////////////////////
     
     
+    // ofBackground(255);
+    ofPushMatrix();
+    ofTranslate(ofGetWidth()/2,ofGetHeight()/2,zPos);
+    
+    
+    ofRotateY((float)mouseX);
+    ofRotateX((float)mouseY);
+    
+    ofTranslate(-150,-150,0);
     
     ofSetColor(255);
+    ofEnableDepthTest();
+    mesh.enableColors();
+    mesh.drawFaces();
     
-    if(drawFaces == 0){
-       if(bDrawCurve1) mesh.drawFaces();
-       if(bDrawCurve2) mesh2.drawFaces();
-       if(bDrawCurve3) mesh3.drawFaces();
-    } else if(drawFaces == 1) {
-       if(bDrawCurve1) mesh.drawVertices();
-       if(bDrawCurve2) mesh2.drawVertices();
-       if(bDrawCurve3) mesh3.drawVertices();
-    } else if(drawFaces == 2){
-       if(bDrawCurve1) mesh.drawWireframe();
-       if(bDrawCurve2) mesh2.drawWireframe();
-       if(bDrawCurve3)  mesh3.drawWireframe();
+    
+    
+    mesh.disableColors();
+    mesh.drawWireframe();
+    
+    
+    
+    for(int i=0;i<curves.size();i++){
+        
+        
+        ofxCurve * curve = curves.at(i);
+        
+        ofNoFill();
+        ofSetColor(0);
+        curve->draw();
+        ofDrawEllipse(curve->start,5,5);
+        ofDrawEllipse(curve->startControl,5,5);
+        ofDrawEllipse(curve->endControl,5,5);
+        ofDrawEllipse(curve->end,5,5);
+        ofDrawLine(curve->start,
+                   curve->startControl);
+        ofDrawLine(curve->end,
+                   curve->endControl);
+        
+        ofVec3f d = curve->getDirection(t);
+        ofVec3f p = curve->plot3d(t);
+        
+        ofSetColor(0,0,0);
+        ofFill();
+        ofDrawEllipse(p, 10, 10);
+        ofDrawEllipse(p+d*100.0f,5,5);
+        ofDrawLine(p,p+d*100.0f);
+        
+        /*
+         ofVec3f myAngle = ofVec3f(100.0f,0,0);
+         
+         ofSetColor(255,0,0);
+         for(int i=0;i<16;i++){
+         ofVec3f normal = myAngle.getRotated(i*360/16,d);
+         
+         ofDrawEllipse(p+normal,5,5);
+         //  ofDrawLine(p,p+normal);
+         }
+         
+         myAngle = ofVec3f(0,100.0f,0);
+         ofSetColor(0,255,0);
+         for(int i=0;i<16;i++){
+         ofVec3f normal = myAngle.getRotated(i*360/16,d);
+         
+         
+         ofDrawEllipse(p+normal,5,5);
+         //   ofDrawLine(p,p+normal);
+         }
+         
+         myAngle = ofVec3f(0,0,100.0f);
+         ofSetColor(0,0,255);
+         for(int i=0;i<16;i++){
+         ofVec3f normal = myAngle.getRotated(i*360/16,d);
+         
+         
+         ofDrawEllipse(p+normal,5,5);
+         //    ofDrawLine(p,p+normal);
+         }
+         */
+        //    okay here's what i'm trying to do...
+        // v1 = new THREE.Vector3(1, 1, 1)
+        // v2 = new THREE.Vector3(1, 1, -1)
+        //var quaternion = new THREE.Quaternion().setFromUnitVectors( v1, v2 );
+        // var matrix = new THREE.Matrix4().makeRotationFromQuaternion( quaternion );
+        
+        // object.applyMatrix( matrix );
+        
+        
+        ofVec3f myAngle = ofVec3f(0,0,100.0f);
+        // radius = 50.0f;
+        
+        ofQuaternion q;
+        q.makeRotate(myAngle,d);
+        
+        ofSetColor(255);
+        for(int i=0;i<16;i++){
+            ofVec3f myPoint = ofVec3f(cos((float)i*TWO_PI/16.0f)*radius,sin((float)i*TWO_PI/16.0f)*radius,0);
+            
+            
+            
+            
+            ofDrawEllipse(p+myPoint*q,5,5);
+            ofDrawLine(p,p+myPoint*q);
+        }
+        
     }
+    
+    
+    //    float radius = 50.0f;
+    
+    //    for(int i=0;i<8;i++){
+    //        float angle = i * 360/8.0f;
+    //
+    //        ofVec3f rightVec = ofVec3f(radius,0,0).getRotated(t+i,d);
+    //        ofVec3f leftVec = ofVec3f(radius,0,0).getRotated(t+i+10,d);
+    //
+    //        ofSetColor(0,255,0);
+    //        ofDrawEllipse(p+rightVec,10,10);
+    //        ofSetColor(0,0,255);
+    //        ofDrawEllipse(p+leftVec,10,10);
+    //
+    //
+    //    }
+    
+    
+    ofDrawBox(-5,-5,-5,10,10,10);
+    
+    ofPopMatrix();
+    
     ofPopMatrix();
     
     ofDisableDepthTest();
     if(!bHide){
         gui.draw();
     }
-    
-   
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    
-    //    curves.clear();
-    //    setup();
-    if(key == 'd'){
-        drawFaces++;
-        if(drawFaces>2){
-            drawFaces = 0;
-        }
-    } else if(key == ' '){
-        bBackground = !bBackground;
-    }
+    drawFaces++;
+    if(drawFaces>2) drawFaces = 0;
 }
 
 //--------------------------------------------------------------
@@ -435,6 +410,6 @@ void ofApp::gotMessage(ofMessage msg){
 }
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){
+void ofApp::dragEvent(ofDragInfo dragInfo){ 
     
 }
