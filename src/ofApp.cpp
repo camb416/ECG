@@ -187,10 +187,11 @@ void ofApp::draw(){
             
         }
     }
+    
     for(int i=0;i<mesh.getNumVertices()-res;i+=res){
-        //            mesh.addIndex(i);
-        //            mesh.addIndex(i+res);
-        //            mesh.addIndex(i+res-1);
+                    mesh.addIndex(i);
+                    mesh.addIndex(i+res+res-1);
+                    mesh.addIndex(i+res);
         for(int j=i;j<i+res-1;j++){
             mesh.addIndex(j);
             mesh.addIndex(j+res);
@@ -200,12 +201,18 @@ void ofApp::draw(){
             mesh.addIndex(j+res);
             mesh.addIndex(j+res+1);
         }
-        //            mesh.addIndex(i+res-1);
-        //            mesh.addIndex(i+res-1+res);
-        //            mesh.addIndex(i+res-1+res+1);
+                    mesh.addIndex(i+res-1);
+                    mesh.addIndex(i+res+res-1);
+                    mesh.addIndex(i);
     }
     
     int offset = 0;
+    
+    
+    // A
+    mesh.addIndex(mesh.getNumVertices()-res);
+    mesh.addIndex(res-1);
+    mesh.addIndex(0);
     for(int i=mesh.getNumVertices()-res;i<mesh.getNumVertices()-1;i++){
         mesh.addIndex(i);
         mesh.addIndex(offset);
@@ -216,6 +223,11 @@ void ofApp::draw(){
         mesh.addIndex(offset+1);
         offset++;
     }
+    // B
+    mesh.addIndex(mesh.getNumVertices()-1);
+    mesh.addIndex(res-1);
+    mesh.addIndex(mesh.getNumVertices()-res);
+    
 
     
     ////////////////////////////////////////////////////////////////////////////////
