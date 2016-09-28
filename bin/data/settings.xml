@@ -1,20 +1,20 @@
 <my_panel>
 	<radius>36.82</radius>
-	<colorA>255, 255, 255, 253</colorA>
-	<colorB>0, 0, 0, 255</colorB>
+	<colorA>255, 206, 176, 253</colorA>
+	<colorB>6, 33, 72, 255</colorB>
 	<colorC>221, 41, 25, 255</colorC>
-	<colorD>0, 54, 118, 255</colorD>
+	<colorD>0, 48, 118, 255</colorD>
 <my_panel/>
 <rot__speed>1.55</rot__speed>
 <redraw_background>1</redraw_background>
-<z_pos>665</z_pos>
+<z_pos>735</z_pos>
 	<twists>10</twists>
 <bg_color>255, 255, 255, 255</bg_color>
 <angle_thick>109.69</angle_thick>
 	<offset>127.8</offset>
-<sections>4</sections>
+<sections>34</sections>
 <draw_curve_1>1</draw_curve_1>
 	<draw_curve_2>0</draw_curve_2>
 	<draw_curve_3>0</draw_curve_3>
-<res>43</res>
+<res>12</res>
 </my_panel>
