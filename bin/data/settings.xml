@@ -7,14 +7,16 @@
 <my_panel/>
 <rot__speed>1.55</rot__speed>
 <redraw_background>1</redraw_background>
-<z_pos>735</z_pos>
-	<twists>10</twists>
-<bg_color>255, 255, 255, 255</bg_color>
+<z_pos>825</z_pos>
+	<twists>6.72</twists>
+<bg_color>50, 50, 58, 255</bg_color>
 <angle_thick>109.69</angle_thick>
 	<offset>127.8</offset>
-<sections>34</sections>
+<sections>4</sections>
 <draw_curve_1>1</draw_curve_1>
 	<draw_curve_2>0</draw_curve_2>
 	<draw_curve_3>0</draw_curve_3>
-<res>12</res>
+<res>6</res>
+<draw_faces>1</draw_faces>
+	<draw_frame>0</draw_frame>
 </my_panel>

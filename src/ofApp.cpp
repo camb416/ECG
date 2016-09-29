@@ -25,6 +25,9 @@ void ofApp::setup(){
     gui.add(bBackground.setup("redraw background", true));
     gui.add(backgroundColor.setup("bg color",ofColor(0,0,0),ofColor(0,0),ofColor(255,255)));
     
+    gui.add(bDrawFaces.setup("draw faces", true));
+    gui.add(bDrawWireframe.setup("draw frame", true));
+    
     gui.loadFromFile("settings.xml");
     
     
@@ -110,7 +113,7 @@ void ofApp::setup(){
     zPos = 0;
     
     t = 0.0f;
-    ofSetBackgroundAuto(true);
+    ofSetBackgroundAuto(false);
     
 }
 
@@ -125,6 +128,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    if(bBackground) ofBackground(backgroundColor);
     // if(ofGetFrameNum()%30==0) ofLog() << curves.size();
     
     ofMesh mesh;
@@ -139,6 +143,9 @@ void ofApp::draw(){
     
     
     ////////////////////////////////////////////////////////////////////////////////
+    
+    
+    float angleAdder = 0.0f;
     
     for(int i=0;i<curves.size();i++){
         
@@ -155,12 +162,13 @@ void ofApp::draw(){
                 ofVec3f a = ofVec3f(0,0,1.0f);
                 ofQuaternion q;
                 q.makeRotate(a,d);
-                ofVec3f myPoint = ofVec3f(cos((float)k/(float)res*TWO_PI)*radius,sin((float)k/(float)res*TWO_PI)*radius,0);
+                ofVec3f myPoint = ofVec3f(cos((float)k/(float)res*TWO_PI+angleAdder)*radius,sin((float)k/(float)res*TWO_PI+angleAdder)*radius,0);
                 mesh.addVertex(p+myPoint*q);
                 ofColor thisColor = colorB;
                 if(k%2==0) thisColor = colorA;
                 if(j==0 && i==0) thisColor = colorC;
                 mesh.addColor(thisColor);
+                angleAdder += twists;
                 
             }
             /*
@@ -246,12 +254,12 @@ void ofApp::draw(){
     ofSetColor(255);
     ofEnableDepthTest();
     mesh.enableColors();
-    mesh.drawFaces();
+    if(bDrawFaces)  mesh.drawFaces();
     
     
     
     mesh.disableColors();
-    mesh.drawWireframe();
+     if(bDrawWireframe) mesh.drawWireframe();
     
     
     
@@ -372,8 +380,18 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    drawFaces++;
-    if(drawFaces>2) drawFaces = 0;
+    switch(key){
+            case 'd':
+            drawFaces++;
+            if(drawFaces>2) drawFaces = 0;
+            break;
+            case 'b':
+            bBackground = !bBackground;
+            break;
+    }
+    
+    
+    
 }
 
 //--------------------------------------------------------------

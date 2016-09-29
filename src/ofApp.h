@@ -38,7 +38,7 @@ public:
     
     ofxFloatSlider radius;
     ofxFloatSlider zPos;
-    ofxIntSlider twists;
+    ofxFloatSlider twists;
     ofxIntSlider res;
     ofxIntSlider numSections;
     
@@ -55,6 +55,10 @@ public:
     
     //    bool bBackground;
     ofxToggle bBackground;
+    ofxToggle bDrawFaces;
+    ofxToggle bDrawWireframe;
     ofxColorSlider backgroundColor;
+    
+    
     
 };
