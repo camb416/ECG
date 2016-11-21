@@ -10,7 +10,7 @@ void ofApp::setup(){
     gui.setup("my panel"); // most of the time you don't need a name
     gui.add(radius.setup("radius", 10, 1, 200));
     gui.add(zPos.setup("z pos",600,0,1000));
-    gui.add(twists.setup("twists",8,0,32));
+    gui.add(twists.setup("twists",0,0,0.1));
     
     gui.add(res.setup("res",6,3,32));
     gui.add(numSections.setup("sections",8,4,64));
